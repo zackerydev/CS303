@@ -1,0 +1,71 @@
+Very Very Basic algorithm
+(no boolean operators or parenthesis yet)
+Try tracing it for different expressions, I think it works for all arithmetic cases
+
+I assume we have an operator(stack1) and operand(stack2) stack as Zach posted earlier.
+
+1.loop through the expression
+	a. add operand, operator, operand to appropriate stack.
+	b. before adding another operator, check the precedence. If the operaotr about to be added has a lower precedence, 
+	   than the operator in the top of the stack, compute all exprressions in the stacks.
+		i. to compute each expression, save the top operand to var1 and pop, save and pop the operand, save and pop
+		   the second operand to var2.
+		ii. compute the expression as var2 operand var1 (has to be done in this order since some operators
+		    are not commutative i.e 2^3 is not 3^2).
+		iii. put the result back in the stack and continue computing expressions until operator stack is empty.
+2. When done looping through expression, compute everything in the stacks, as in steps b.i thru b.iii
+3. Now do one last pop and save on the operand stack, this is the result.
+
+
+
+int evaluate_infix(expression){
+	
+	declare iter at beginning of expression
+
+	while(iter != expression.end()){
+
+		get a character, get more characters if the operand is more than 1 digit,throw an error if its not an operator or operand, 
+		skip whitespace, etc.
+
+		if(the character is an operator && the stack1 is NOT empty){
+
+			if(precedence of current operator is lower than precedence of top() operator in stack1){
+				while(stack1 is not empty){
+					//save and pop the first operand
+					int var1 = stack2.top();
+					stack2.pop()
+
+					//save and pop the operand
+					char oper = stack1.top();
+					stack1.pop();
+
+					//save and pop the second operand
+					char var2 = stack2.top()
+					stack2.pop();
+
+					//add the result back to the operand stack
+					//the operands must be passed in this order to account for noncommutativity
+					stack2.push(compute(var2,var1,oper));
+			else{
+				stack1.push(operator);
+			}
+		else{
+			stack2.push(operand);
+		}
+		increment to next character;
+	}
+	
+	//at this point we're done with the expression, we can compute the remaining things in the stacks as before in the nested while loop.
+	//When we're done with that, the result will be in stack2, and we'll know its the result since there wont be any operators in stack1
+	//this might be inefficient since we'll be repeating code but for now we have the basic idea.
+	
+	//return the result of the expression
+	return stack2.pop();
+}
+int compute(int o1, int o2, char operator){
+	use switch statement to match up char operators with the actual operators
+	switch(operator)
+		case '*':
+		return o1*o2;
+}
+	
