@@ -2,13 +2,12 @@ Very Very Basic algorithm
 (no boolean operators or parenthesis yet)
 Try tracing it for different expressions, I think it works for all arithmetic cases
 
-I assume we have an operator(stack1) and operand(stack2) stack as Zach posted earlier.
+I assume we have an operator(stack1) and operand(stack2) stack as Zack posted earlier.
 
 1.loop through the expression
 	a. add operand, operator, operand to appropriate stack.
-	b. before adding another operator, check the precedence. If the operaotr about to be added has a lower precedence, 
-	   than the operator in the top of the stack, compute all exprressions in the stacks until an operator is encountered
-	   with an equal or lower precedence than the operator on deck.
+	b. before adding another operator, check the precedence. If the operator about to be added has a lower precedence, 
+	   than the operator in the top of the stack, compute all exprressions in the stacks.
 		i. to compute each expression, save the top operand to var1 and pop, save and pop the operand, save and pop
 		   the second operand to var2.
 		ii. compute the expression as var2 operand var1 (has to be done in this order since some operators
@@ -17,6 +16,11 @@ I assume we have an operator(stack1) and operand(stack2) stack as Zach posted ea
 2. When done looping through expression, compute everything in the stacks, as in steps b.i thru b.iii
 3. Now do one last pop and save on the operand stack, this is the result.
 
+ZACK: For parentheses I think we can just throw them onto the operator stack when we encounter an opening paren, and then when we encounter
+a closed paren we pop until we get to the open paren and keep going. I think that would be the simplist way to do the parentheses. I think we
+should just do the boolean operators the same as we do the arithmetic operators. Because I think it will work the same way, if you find
+a !2 and it goes into the compute function it will just return 0 because that would be false, and as long as we update the is_bool variable
+we can know that the answer will have to be converted to true or false e.g. 0 = false, anything else = 1.
 
 
 int evaluate_infix(expression){
