@@ -14,13 +14,22 @@ deal with the error handling. We will also need to have a precedence function to
 
 
 
-
-#include <iostream>
+#include "evaluator.h"
 
 using namespace std;
 
 int main(){
 
-    cout << "Test" << endl;
+	//"2-1+1*7^2-11" is incorrect
+
+	Evaluator e;
+	try{
+		int result = e.eval("1+2^1*3");
+	}
+	catch (exception e){
+		cout << e.what();
+	}
+	return 0;
+    
 }
 

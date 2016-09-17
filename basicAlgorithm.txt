@@ -7,7 +7,8 @@ I assume we have an operator(stack1) and operand(stack2) stack as Zach posted ea
 1.loop through the expression
 	a. add operand, operator, operand to appropriate stack.
 	b. before adding another operator, check the precedence. If the operaotr about to be added has a lower precedence, 
-	   than the operator in the top of the stack, compute all exprressions in the stacks.
+	   than the operator in the top of the stack, compute all exprressions in the stacks until an operator is encountered
+	   with an equal or lower precedence than the operator on deck.
 		i. to compute each expression, save the top operand to var1 and pop, save and pop the operand, save and pop
 		   the second operand to var2.
 		ii. compute the expression as var2 operand var1 (has to be done in this order since some operators
