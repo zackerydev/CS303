@@ -1,6 +1,6 @@
 #include "evaluator.h"
 
-const string Evaluator::OPERATOR_PRECEDENCE = "^*/%+-";
+const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"+-", "*/%", "^"};
 
 int Evaluator::eval(const string& expression){
 
@@ -60,10 +60,10 @@ int Evaluator::eval(const string& expression){
 			if (!operators.empty())
 			{
 				/*Check to see if the current operator has lesser precedence than the top operator in stack*/
-				if (OPERATOR_PRECEDENCE.find(the_operator) < OPERATOR_PRECEDENCE.find(operators.top())) 
+				if (!is_greater_precedence(the_operator)) 
 				{
 					//The current operator has lesser precedence, compute everything in the stacks
-					solve();
+					solve(the_operator);
 				}
 			}
 			//operators stack is empty or the current operator has greater precedence, add it to the stack
@@ -81,15 +81,38 @@ int Evaluator::eval(const string& expression){
 bool Evaluator::is_valid(char c){
 
 	//Check to see if the char is an operator or operand
-	if ((OPERATOR_PRECEDENCE.find(c) != -1) || (isdigit(c)))
+	for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
 	{
-		return true;
+		if ((OPERATOR_PRECEDENCE[i].find(c) != -1) || (isdigit(c)))
+		{
+			return true;
+		}
 	}
+	
 
 	//it is an invalid character
 	return false;
 }
 
+void Evaluator::solve(char current_operator){
+
+	int var1, var2;
+	char the_operator;
+
+	while (!operators.empty() && !is_greater_precedence(current_operator))
+	{
+		var1 = operands.top();
+		operands.pop();
+
+		var2 = operands.top();
+		operands.pop();
+
+		the_operator = operators.top();
+		operators.pop();
+
+		operands.push(compute(var2,var1,the_operator));
+	}
+}
 void Evaluator::solve(){
 
 	int var1, var2;
@@ -137,4 +160,42 @@ int Evaluator::compute(int first, int second, char operation){
 	}
 
 	return result;
+}
+
+bool Evaluator::is_greater_precedence(char current){
+
+	//initialize the indeces of the two operators; they will be overwritten in the loop 
+	int index_current = -1;
+	int index_top = -1;
+
+	//loop through the precedence array
+	for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
+	{
+		//If we haven't determined a precedence for the current operator
+		if (index_current == -1)
+		{
+			//Look for the operator in one of the precedence strings
+			if (OPERATOR_PRECEDENCE[i].find(current) != -1)
+			{
+				//assign the precedence value
+				index_current = i;
+			}
+		}
+
+		if (index_top == -1)
+		{
+			if (OPERATOR_PRECEDENCE[i].find(operators.top()) != -1)
+			{
+				index_top = i;
+			}
+		}
+	}
+
+	if (index_current > index_top)
+	{
+		//the current operator has greater precedence than the operator on top of the stack
+		return true;
+	}
+	//the current operator has lower or equal precedence than the operator on top of the stack
+	return false;
 }

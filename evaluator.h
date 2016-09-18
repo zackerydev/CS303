@@ -41,9 +41,10 @@ private:
         use precedence and proceed to calculate accordingly. This will be done in the eval() function. */
 
 
-	/*static member to store the operators
-	When declared they will be ordered from greatest to least precedence*/
-	const static string OPERATOR_PRECEDENCE;
+	const static int NUMBER_OF_PRECEDENCES = 3;
+	/*static array to store the operators
+	When declared they will be ordered from least to greatest precedence*/
+	const static string OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES];
         
     stack<int> operands;
 
@@ -67,6 +68,9 @@ private:
 		pop and save the operand on top of the operand stack (num2)
 		call compute(num2,num1,operator) IN THAT ORDER to account for noncommutativity (ie.. 3^2 != 2^3)
 	After the functions runs, operands stack will be empty and operators will contain the final result*/
+	void solve(char);
+
+	/* The post iteration version of the function */
 	void solve();
 
 	/*Responsible for arithmetic of a single expresion
@@ -74,4 +78,9 @@ private:
 	  Uses <cmath> lib for exponents*/
 	int compute(int,int,char);
 
+	/* Compares the current operator with the operator on top of the operator stack
+	   Returns true if the current operator has a greater precedence than the operator on the top of operator stack
+	   and return false otherwise
+	*/
+	bool is_greater_precedence(char);
 };
