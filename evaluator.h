@@ -17,6 +17,7 @@ public:
 	Uses <sstream> for int conversions */
     
     int eval(const string&);
+    bool get_is_bool();
 
 private:
     /*This private variable container is going to be used to contain all of the operands from the input string. 
@@ -41,10 +42,12 @@ private:
         use precedence and proceed to calculate accordingly. This will be done in the eval() function. */
 
 
-	const static int NUMBER_OF_PRECEDENCES = 3;
+	const static int NUMBER_OF_PRECEDENCES = 4;
 	/*static array to store the operators
 	When declared they will be ordered from least to greatest precedence*/
 	const static string OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES];
+    const static string OPEN_PARENTHESES;
+    const static string CLOSED_PARENTHESES;
         
     stack<int> operands;
 
@@ -52,7 +55,7 @@ private:
         The assumption is that all given operators will be integers. Binary opeators and comparisons will return numbers (1 or 0) for 
         the solution and make the bool variable is_bool true. Then the answer will be converted to true or false at the end. The eval()
         function will have the job of popping the operators when needed.*/
-    stack<char> operators;
+    stack<string> operators;
 
     /* NOTE:I don't know if we need this or if there is a better way feel free to change this variable
         all it needs to do is be true if the answer we are going to print out is true and false if it is going to be a normal integer */
@@ -68,19 +71,20 @@ private:
 		pop and save the operand on top of the operand stack (num2)
 		call compute(num2,num1,operator) IN THAT ORDER to account for noncommutativity (ie.. 3^2 != 2^3)
 	After the functions runs, operands stack will be empty and operators will contain the final result*/
-	void solve(char);
-
+	void solve(string);
+    // Same as the solve function above but it only goes until it finds an opening paren, then stops
+    void solve_parentheses();
 	/* The post iteration version of the function */
 	void solve();
 
 	/*Responsible for arithmetic of a single expresion
 	  Returns the integer result of the operation
 	  Uses <cmath> lib for exponents*/
-	int compute(int,int,char);
+	int compute(int,int,string);
 
 	/* Compares the current operator with the operator on top of the operator stack
 	   Returns true if the current operator has a greater precedence than the operator on the top of operator stack
 	   and return false otherwise
 	*/
-	bool is_greater_precedence(char);
+	bool is_greater_precedence(string);
 };

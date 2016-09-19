@@ -22,12 +22,27 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("9 * 3^6-2^4+8-2-2");
-		cout << result << endl;
+		int result = e.eval("(1+2) * 3");
+        if (e.get_is_bool() == true)
+        {
+            if (result == 1)
+            {
+                cout << "True" << endl;
+            }
+            else
+            {
+                cout << "False" << endl;
+            }
+        }
+        else
+        {
+            cout << result << endl;
+        }
 	}
 	catch (exception e){
 		cout << e.what();
 	}
+    system("pause");
 	return 0;
     
 }

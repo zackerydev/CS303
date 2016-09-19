@@ -1,6 +1,8 @@
 #include "evaluator.h"
+const string Evaluator::OPEN_PARENTHESES = "({[";
+const string Evaluator::CLOSED_PARENTHESES = ")}]";
+const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {">,>=,<,<=","+-", "*/%", "^"};
 
-const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"+-", "*/%", "^"};
 
 int Evaluator::eval(const string& expression){
 
@@ -9,7 +11,7 @@ int Evaluator::eval(const string& expression){
 
 	//variables for storing an operand or an operator
 	string operand = "";
-	char the_operator;
+	string the_operator;
 
 	//loop through the expression
 	for (si = expression.begin(); si != expression.end(); ++si){
@@ -54,7 +56,31 @@ int Evaluator::eval(const string& expression){
 		else{ //handle operators here
 
 			//the char must be an operator at this point
-			the_operator = *si._Ptr;
+            the_operator = *si._Ptr;
+            // Create a string for the next item so we can test the two character operators 
+            //Then search through to make sure the next character is an operator
+            /*string next_item = "";
+            next_item += (*si + 1);
+            for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
+            {
+                if (OPERATOR_PRECEDENCE[i].find(next_item) == true)
+                {
+                    continue;
+                }
+            }
+            */
+            // Check if the operator is an opening parentheses
+            if (OPEN_PARENTHESES.find(the_operator) != -1)
+            {
+                operators.push(the_operator);
+                continue;
+            }
+            // Check if the operators is a closing paren
+            if (CLOSED_PARENTHESES.find(the_operator) != -1) // We found a closed parentheses
+            {
+                solve_parentheses();
+                continue;
+            }
 
 			//Check to see if there are operators present for comparison
 			if (!operators.empty())
@@ -83,7 +109,7 @@ bool Evaluator::is_valid(char c){
 	//Check to see if the char is an operator or operand
 	for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
 	{
-		if ((OPERATOR_PRECEDENCE[i].find(c) != -1) || (isdigit(c)))
+		if ((OPERATOR_PRECEDENCE[i].find(c) != -1) || (isdigit(c) || (OPEN_PARENTHESES.find(c) != -1) || (CLOSED_PARENTHESES.find(c) != -1)))
 		{
 			return true;
 		}
@@ -94,10 +120,10 @@ bool Evaluator::is_valid(char c){
 	return false;
 }
 
-void Evaluator::solve(char current_operator){
+void Evaluator::solve(string current_operator){
 
 	int var1, var2;
-	char the_operator;
+	string the_operator;
 
 	while (!operators.empty() && !is_greater_precedence(current_operator))
 	{
@@ -113,10 +139,34 @@ void Evaluator::solve(char current_operator){
 		operands.push(compute(var2,var1,the_operator));
 	}
 }
+void Evaluator::solve_parentheses() { // Essentially just the solve() function again but it stops when it hits an open parentheses
+    
+     int var1, var2;
+     string the_operator;
+    
+     while (!operators.empty())
+     {
+        if (OPEN_PARENTHESES.find(operators.top()) != -1)
+        {
+            operators.pop();
+            break;
+        }
+        var1 = operands.top();
+        operands.pop();
+        
+        var2 = operands.top();
+        operands.pop();
+        
+        the_operator = operators.top();
+        operators.pop();
+        
+            operands.push(compute(var2, var1, the_operator));
+        }
+}
 void Evaluator::solve(){
 
 	int var1, var2;
-	char the_operator;
+	string the_operator;
 
 	while (!operators.empty())
 	{
@@ -133,13 +183,56 @@ void Evaluator::solve(){
 	}
 }
 
-int Evaluator::compute(int first, int second, char operation){
+int Evaluator::compute(int first, int second, string operation){
 	
 	int result;
 
-	switch (operation)
-	{
-	case '^':
+        if (operation == "^")
+        {
+            result = pow(first, second);
+        }
+        else if (operation == "*")
+        {
+            result = first * second;
+        }
+        else if (operation == "/")
+        {
+            result = first / second;
+        }
+        else if (operation == "%")
+        {
+            result = first % second;
+        }
+        else if (operation == "+")
+        {
+            result = first + second;
+        }
+        else if (operation == "-")
+        {
+            result = first - second;
+        }
+        else if (operation == ">")
+        {
+            result = first > second;
+            is_bool = true;
+        }
+        else if (operation == "<")
+        {
+            result = first < second;
+            is_bool = true;
+        }
+        else if (operation == ">=")
+        {
+            result = first >= second;
+            is_bool = true;
+        }
+        else if (operation == "<=")
+        {
+            result = first <= second;
+            is_bool = true;
+        }
+
+	/*case '^':
 		result = pow(first,second);
 		break;
 	case '*':
@@ -157,12 +250,28 @@ int Evaluator::compute(int first, int second, char operation){
 	case '-':
 		result = first - second;
 		break;
-	}
+    case '>':
+        result = first > second;
+        is_bool = true;
+        break;
+    case '<':
+        result = first < second;
+        is_bool = true;
+        break;
+    case '>=':
+        result = first >= second;
+        is_bool = true;
+        break;
+    case '<=':
+        result = first <= second;
+        is_bool = true;
+        break;
+	} */ // I don't think we can use this because some of the operands are multiple characters
 
 	return result;
 }
 
-bool Evaluator::is_greater_precedence(char current){
+bool Evaluator::is_greater_precedence(string current){
 
 	//initialize the indeces of the two operators; they will be overwritten in the loop 
 	int index_current = -1;
@@ -198,4 +307,9 @@ bool Evaluator::is_greater_precedence(char current){
 	}
 	//the current operator has lower or equal precedence than the operator on top of the stack
 	return false;
+}
+
+bool Evaluator::get_is_bool()
+{
+    return is_bool;
 }
