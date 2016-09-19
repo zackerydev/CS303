@@ -20,17 +20,14 @@ using namespace std;
 
 int main(){
 
-	//"2-1+1*7^2-11" is incorrect
-
 	Evaluator e;
 	try{
-		int result = e.eval("2+(3*4)");
-        cout << result << endl;
+		int result = e.eval("9 * 3^6-2^4+8-2-2");
+		cout << result << endl;
 	}
 	catch (exception e){
 		cout << e.what();
 	}
-    system("pause");
 	return 0;
     
 }
