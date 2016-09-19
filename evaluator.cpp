@@ -1,6 +1,8 @@
 #include "evaluator.h"
 
-const string Evaluator::OPERATOR_PRECEDENCE = "^*/%+-";
+const string Evaluator::OPERATOR_PRECEDENCE = "^*/%+-"; // I added parentheses to the front, it works, I'm not sure if its necessary
+const string Evaluator::OPEN_PARENTHESES = "({[";
+const string Evaluator::CLOSED_PARENTHESES = ")}]";
 
 int Evaluator::eval(const string& expression){
 
@@ -53,12 +55,24 @@ int Evaluator::eval(const string& expression){
 		}
 		else{ //handle operators here
 
-			//the char must be an operator at this point
+			//the char must be an operator *or parentheses* at this point
 			the_operator = *si._Ptr;
-
+            //Check if the operator is an opening parentheses
+            if (OPEN_PARENTHESES.find(the_operator) != -1)
+            {
+                operators.push(the_operator);
+                continue;
+            }
+            // Check if the operators is a closing paren
+            if (CLOSED_PARENTHESES.find(the_operator) != -1) // We found a closed parentheses
+            {
+                solve_parentheses();
+                continue;
+            }
 			//Check to see if there are operators present for comparison
-			if (!operators.empty())
+			else if (!operators.empty())
 			{
+                
 				/*Check to see if the current operator has lesser precedence than the top operator in stack*/
 				if (OPERATOR_PRECEDENCE.find(the_operator) < OPERATOR_PRECEDENCE.find(operators.top())) 
 				{
@@ -80,8 +94,9 @@ int Evaluator::eval(const string& expression){
 
 bool Evaluator::is_valid(char c){
 
+    
 	//Check to see if the char is an operator or operand
-	if ((OPERATOR_PRECEDENCE.find(c) != -1) || (isdigit(c)))
+    if ((OPERATOR_PRECEDENCE.find(c) != -1) || (isdigit(c)) || (OPEN_PARENTHESES.find(c) != -1) || (CLOSED_PARENTHESES.find(c) != -1))
 	{
 		return true;
 	}
@@ -108,6 +123,31 @@ void Evaluator::solve(){
 
 		operands.push(compute(var2,var1,the_operator));
 	}
+}
+
+void Evaluator::solve_parentheses() { // Essentially just the solve() function again but it stops when it hits an open parentheses
+
+    int var1, var2;
+    char the_operator;
+
+    while (!operators.empty())
+    {
+        if (OPEN_PARENTHESES.find(operators.top()) != -1)
+        {
+            operators.pop();
+            break;
+        }
+        var1 = operands.top();
+        operands.pop();
+
+        var2 = operands.top();
+        operands.pop();
+
+        the_operator = operators.top();
+        operators.pop();
+
+        operands.push(compute(var2, var1, the_operator));
+    }
 }
 
 int Evaluator::compute(int first, int second, char operation){

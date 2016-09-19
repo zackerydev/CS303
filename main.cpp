@@ -24,11 +24,13 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("1+2^1*3");
+		int result = e.eval("2+(3*4)");
+        cout << result << endl;
 	}
 	catch (exception e){
 		cout << e.what();
 	}
+    system("pause");
 	return 0;
     
 }
