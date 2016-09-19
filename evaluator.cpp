@@ -208,7 +208,9 @@ void Evaluator::solve(){
 
 		//Open parenthesis was unaccounted for
 		//Don't need to check for closing since this was already handled in the solve_parenthesis
-		if (OPEN_PARENTHESES.find(the_operator) >= 0)
+		int index_of_open = OPEN_PARENTHESES.find(the_operator);
+
+		if (index_of_open >= 0)
 		{
 			throw exception("Cannot have an opening parenthesis without closing it.");
 		}

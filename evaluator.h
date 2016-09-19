@@ -73,7 +73,7 @@ private:
 	After the functions runs, operands stack will be empty and operands will contain the final result*/
 	void solve(string);
     // Same as the solve function above but it only goes until it finds an opening paren, then stops
-	//Pass in the index of the paren type so we know which opening parenthesis to match it with
+	//Pass in the index of the closing paren type so we know which opening parenthesis to match it with
     void solve_parentheses(int);
 	/* The post iteration version of the function */
 	void solve();

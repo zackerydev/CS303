@@ -22,7 +22,7 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("[12/3}");
+		int result = e.eval("12/3*8^1]-7");
         if (e.get_is_bool() == true)
         {
             if (result == 1)
