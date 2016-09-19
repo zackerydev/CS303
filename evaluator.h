@@ -70,10 +70,11 @@ private:
 		pop and save the operator on top of the operator stack
 		pop and save the operand on top of the operand stack (num2)
 		call compute(num2,num1,operator) IN THAT ORDER to account for noncommutativity (ie.. 3^2 != 2^3)
-	After the functions runs, operands stack will be empty and operators will contain the final result*/
+	After the functions runs, operands stack will be empty and operands will contain the final result*/
 	void solve(string);
     // Same as the solve function above but it only goes until it finds an opening paren, then stops
-    void solve_parentheses();
+	//Pass in the index of the paren type so we know which opening parenthesis to match it with
+    void solve_parentheses(int);
 	/* The post iteration version of the function */
 	void solve();
 

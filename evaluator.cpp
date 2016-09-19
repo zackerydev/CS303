@@ -73,13 +73,15 @@ int Evaluator::eval(const string& expression){
             if (OPEN_PARENTHESES.find(the_operator) != -1)
             {
                 operators.push(the_operator);
+
                 continue;
             }
             // Check if the operators is a closing paren
             if (CLOSED_PARENTHESES.find(the_operator) != -1) // We found a closed parentheses
-            {
-                solve_parentheses();
-                continue;
+            {	
+				//something goofy going on here..we lose the data in the stacks?
+				solve_parentheses(CLOSED_PARENTHESES.find(the_operator));
+				continue;
             }
 
 			//Check to see if there are operators present for comparison
@@ -139,18 +141,38 @@ void Evaluator::solve(string current_operator){
 		operands.push(compute(var2,var1,the_operator));
 	}
 }
-void Evaluator::solve_parentheses() { // Essentially just the solve() function again but it stops when it hits an open parentheses
-    
+void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the solve() function again but it stops when it hits an open parentheses
+     //Pass in the index of the paren type so we know which opening parenthesis to match it with 
+	 //Keep looping while ending paren != opening paren .. when this condition evaluates to false, we'll know we;ve found the correspoding paren and stop evaluating 
+	 //BUT if we get down to an empty stack within the loop, then we'll know an opening paren was never there
+
+	 //while(open.find(open_paren) != closed.find(closed_paren)){}
+
      int var1, var2;
-     string the_operator;
-    
+	 string the_operator;
+	 //Keep track of what type of opening parenthesis is encountered
+	 int index_of_open;
+	   
+	 //Keep doing computations while there's still operators
      while (!operators.empty())
      {
-        if (OPEN_PARENTHESES.find(operators.top()) != -1)
-        {
-            operators.pop();
-            break;
-        }
+		 //Keep updating if we found an open parenthesis or not
+		 index_of_open = OPEN_PARENTHESES.find(operators.top());
+
+		 //A parenthesis was encountered
+		 if (index_of_open >= 0)
+		 {
+			 //The parenthesis match!
+			 if (index_of_open == index_of_closed)
+			 {
+				 //pop the matched parenthesis out of the stack.
+				 operators.pop();
+				 return;
+			 }
+			 //Parenthesis type don't match up
+			 throw exception("Pair of parenthesis did not match.");
+		 }
+
         var1 = operands.top();
         operands.pop();
         
@@ -159,9 +181,14 @@ void Evaluator::solve_parentheses() { // Essentially just the solve() function a
         
         the_operator = operators.top();
         operators.pop();
-        
-            operands.push(compute(var2, var1, the_operator));
-        }
+	
+        operands.push(compute(var2, var1, the_operator));
+     }
+
+	 //At this point, operators stack is empty but no opening parenthesis was ever found.
+	 throw exception("Cannot have closed parenthesis without an opening parenthesis.");
+
+	 
 }
 void Evaluator::solve(){
 
@@ -178,6 +205,13 @@ void Evaluator::solve(){
 
 		the_operator = operators.top();
 		operators.pop();
+
+		//Open parenthesis was unaccounted for
+		//Don't need to check for closing since this was already handled in the solve_parenthesis
+		if (OPEN_PARENTHESES.find(the_operator) >= 0)
+		{
+			throw exception("Cannot have an opening parenthesis without closing it.");
+		}
 
 		operands.push(compute(var2,var1,the_operator));
 	}
