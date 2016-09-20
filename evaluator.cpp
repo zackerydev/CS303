@@ -1,48 +1,62 @@
 #include "evaluator.h"
-const string Evaluator::OPEN_PARENTHESES = "({[";
-const string Evaluator::CLOSED_PARENTHESES = ")}]";
+
+const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used for evaluation
+const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
+
 const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {">,>=,<,<=","+-", "*/%", "^"};
 
+/*const string OPERATORS[] = { "NOT", "INC", "DEC", "NEG", "POW", "MUL","DIV","MOD","ADD","SUB","GREATEQU","GREAT","LESSEQU","LESS", "EQU", "NOTEQU", "AND", "OR" }; // Operators allowed to be pushed to the stack
 
-int Evaluator::eval(const string& expression){
+const int PRECEDENCE[] = { 8,8,8,8,7,6,6,6,5,5,4,4,4,4,3,3,2,1 }; // Precedence of the above operators*/
 
-	//declare iterator 
+int Evaluator::eval(const string& expression)
+{
+	//Declare iterator
 	string::const_iterator si; 
 
-	//variables for storing an operand or an operator
+	//Variables for storing an operand or an operator
 	string operand = "";
 	string the_operator;
 
-	//loop through the expression
-	for (si = expression.begin(); si != expression.end(); ++si){
-
-		//**bad character block**
-
-		if (!is_valid(*si._Ptr)){
+	//Loop through the expression
+	for (si = expression.begin(); si != expression.end(); ++si)
+	{
+		/******BAD CHARACTER BLOCK******/
+		
+		//Check for valid operator and digit as iterator
+		if (!is_operator(*si) && !isdigit(*si))
+		{
 			//If we found a space character, go back to top of the loop
-			if (isspace(*si._Ptr))
+			try
 			{
-				continue;
-			}
+				if (isspace(*si))
+				{
+					continue;
+				}
+			
 			//invalid character
-			throw exception("bad character in expression");
+			throw 20;
+			}
+			catch(int e)
+			{
+				 cout << "Character is invalid. Exception Nr. " << e << '\n';
+			}
 		}
 		
-		//**good character block**
+		/******GOOD CHARACTER BLOCK******/
 
-		if (isdigit(*si)){ //handle operands here
+		if (isdigit(*si))//handle operands here
+		{ 
 			//Add the char to operand string
 			operand += *si;
-
-			//Peek at the next character, if it is a digit, back to the top of loop
-			//Also check to make sure if next iteration is the end!
+			
+			//Check next char to add to operand string
 			if ((si+1) != expression.end() && isdigit(*(si+1))) 
 			{
 				continue;
 			}
 
-			//Now we have the full number
-			//Convert the number string to an int
+			//Convert the full number(operand string) to an int
 			stringstream ss(operand);
 			int result;
 			ss >> result;
@@ -53,31 +67,20 @@ int Evaluator::eval(const string& expression){
 			//Clear the string container for the next operand
 			operand.clear();
 		}
-		else{ //handle operators here
+		else //handle operators here
+		{ 
+			//Assign iterator char to operator variable
+            the_operator = *si;
 
-			//the char must be an operator at this point
-            the_operator = *si._Ptr;
-            // Create a string for the next item so we can test the two character operators 
-            //Then search through to make sure the next character is an operator
-            /*string next_item = "";
-            next_item += (*si + 1);
-            for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
-            {
-                if (OPERATOR_PRECEDENCE[i].find(next_item) == true)
-                {
-                    continue;
-                }
-            }
-            */
             // Check if the operator is an opening parentheses
             if (OPEN_PARENTHESES.find(the_operator) != -1)
             {
                 operators.push(the_operator);
-
                 continue;
             }
-            // Check if the operators is a closing paren
-            if (CLOSED_PARENTHESES.find(the_operator) != -1) // We found a closed parentheses
+
+            // Check if the operators is a closing parentheses
+            if (CLOSED_PARENTHESES.find(the_operator) != -1) 
             {	
 				//something goofy going on here..we lose the data in the stacks?
 				solve_parentheses(CLOSED_PARENTHESES.find(the_operator));
@@ -87,7 +90,7 @@ int Evaluator::eval(const string& expression){
 			//Check to see if there are operators present for comparison
 			if (!operators.empty())
 			{
-				/*Check to see if the current operator has lesser precedence than the top operator in stack*/
+				//Check to see if the current operator has lesser precedence than the top operator in stack
 				if (!is_greater_precedence(the_operator)) 
 				{
 					//The current operator has lesser precedence, compute everything in the stacks
@@ -101,32 +104,24 @@ int Evaluator::eval(const string& expression){
 	//Done iterating through the expression, now compute the expressions in the stacks
 	solve();
 
-	int final_result = operands.top();
+	int final_result = operands.top(); 
 	operands.pop();
 	return final_result;
 }
 
-bool Evaluator::is_valid(char c){
-
-	//Check to see if the char is an operator or operand
-	for (int i = 0; i < NUMBER_OF_PRECEDENCES; i++)
-	{
-		if ((OPERATOR_PRECEDENCE[i].find(c) != -1) || (isdigit(c) || (OPEN_PARENTHESES.find(c) != -1) || (CLOSED_PARENTHESES.find(c) != -1)))
-		{
-			return true;
-		}
-	}
-	
-
-	//it is an invalid character
-	return false;
+bool Evaluator::is_operator(char c) //Check to see if the char is an operator
+{
+	const string SIGNS = "!+-^*/%><=&|([{)]}"; // Allowable operators
+	return SIGNS.find(c) != string::npos;
 }
 
-void Evaluator::solve(string current_operator){
-
+void Evaluator::solve(string current_operator)
+{
+	//Declare operand and operator variables
 	int var1, var2;
 	string the_operator;
 
+	
 	while (!operators.empty() && !is_greater_precedence(current_operator))
 	{
 		var1 = operands.top();
@@ -152,7 +147,9 @@ void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the
 	 string the_operator;
 	 //Keep track of what type of opening parenthesis is encountered
 	 int index_of_open;
-	   
+	 
+	try
+	{
 	 //Keep doing computations while there's still operators
      while (!operators.empty())
      {
@@ -162,7 +159,9 @@ void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the
 		 //A parenthesis was encountered
 		 if (index_of_open >= 0)
 		 {
-			 //The parenthesis match!
+			try
+			{ 
+			//The parenthesis match!
 			 if (index_of_open == index_of_closed)
 			 {
 				 //pop the matched parenthesis out of the stack.
@@ -170,7 +169,12 @@ void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the
 				 return;
 			 }
 			 //Parenthesis type don't match up
-			 throw exception("Pair of parenthesis did not match.");
+			 throw 30;
+			}
+			catch(int d)
+			{
+				cout << "Pair of parenthesis did not match." << endl;
+			}
 		 }
 
         var1 = operands.top();
@@ -186,7 +190,12 @@ void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the
      }
 
 	 //At this point, operators stack is empty but no opening parenthesis was ever found.
-	 throw exception("Cannot have closed parenthesis without an opening parenthesis.");
+	 throw 40;
+	}
+	catch(int f)
+	{
+		cout << "Cannot have closed parenthesis without an opening parenthesis." << endl;
+	}
 
 	 
 }
@@ -209,12 +218,18 @@ void Evaluator::solve(){
 		//Open parenthesis was unaccounted for
 		//Don't need to check for closing since this was already handled in the solve_parenthesis
 		int index_of_open = OPEN_PARENTHESES.find(the_operator);
-
 		if (index_of_open >= 0)
 		{
-			throw exception("Cannot have an opening parenthesis without closing it.");
+			try
+			{
+				throw 20;
+			}
+			catch(int g)
+			{
+				cout << "Cannot have an opening parenthesis without closing it." << endl;
+			}
 		}
-
+			
 		operands.push(compute(var2,var1,the_operator));
 	}
 }
@@ -267,43 +282,6 @@ int Evaluator::compute(int first, int second, string operation){
             result = first <= second;
             is_bool = true;
         }
-
-	/*case '^':
-		result = pow(first,second);
-		break;
-	case '*':
-		result = first * second;
-		break;
-	case '/':
-		result = first / second;
-		break;
-	case '%':
-		result = first % second;
-		break;
-	case '+':
-		result = first + second;
-		break;
-	case '-':
-		result = first - second;
-		break;
-    case '>':
-        result = first > second;
-        is_bool = true;
-        break;
-    case '<':
-        result = first < second;
-        is_bool = true;
-        break;
-    case '>=':
-        result = first >= second;
-        is_bool = true;
-        break;
-    case '<=':
-        result = first <= second;
-        is_bool = true;
-        break;
-	} */ // I don't think we can use this because some of the operands are multiple characters
-
 	return result;
 }
 
