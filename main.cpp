@@ -1,3 +1,7 @@
+//Zach, James, Alexander
+//CS303, Kuhail
+//Infix Expression Evaluation
+
 /* Tentative Alorithm:
 
 I was thinking about the ways we could implement the infix operator and I think I have a good starting point.
@@ -22,7 +26,7 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("12/3*8^1]-7");
+		int result = e.eval("1+2*3");
         if (e.get_is_bool() == true)
         {
             if (result == 1)
@@ -39,11 +43,11 @@ int main(){
             cout << result << endl;
         }
 	}
-	catch (exception e){
-		cout << e.what();
+	catch (int e)
+    {
+		cout << "Evaluator object could not read in the expression" << endl;
 	}
     system("pause");
 	return 0;
     
 }
-

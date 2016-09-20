@@ -20,8 +20,7 @@ private:
     
 	const static int NUMBER_OF_PRECEDENCES = 4; //Stores the number of precendences accounted for
 	const static string OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES]; //Stores operators grouped by precedence in string
-    const static string OPEN_PARENTHESES;//Stores open parentheses in string used for evaluation
-    const static string CLOSED_PARENTHESES;//Stores closed parentheses
+   
         
     stack<int> operands; //Stack that contains all operators in the expression
 
@@ -29,7 +28,7 @@ private:
 
     bool is_bool; //Bool that determines if infix statement is a true/false expression
 
-	bool is_valid(char); //Returns true if the char is an operator or digit, false for anything else
+	bool is_operator(char); //Returns true if the char is an operator or digit, false for anything else
 
 	/*Empties out the stacks by doing the appropriate computations
 	During the compuation process, we want to..
