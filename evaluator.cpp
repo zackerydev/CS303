@@ -4,7 +4,7 @@ const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used f
 const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
 const string TWO_CHARACTER_OP_1 = "+-><=!&|"; // Stores the first character in a two character operator string
 const string TWO_CHARACTER_OP_2 = "=+-&|"; // Stores the second character in a two character operator string
-const string UNARY_OPERATORS[4] = { "i","!","++","--" };
+const string UNARY_OPERATORS[4] = { "-","!","++","--" }; // Stores all unary operators "negative" is a place holder for -
 
 const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"||","&&","==!=",">,>=,<,<=","+-", "*/%", "^", "-++--!"};
 
@@ -112,7 +112,20 @@ int Evaluator::eval(const string& expression)
             {
                 if (UNARY_OPERATORS[i] == the_operator)
                 { //If it is unary
-                    
+                    if (i == 0) // Deals with the case where we have a "-" with no numbers in front in which case we treat it as a negation
+                    {
+                        if (operands.empty())
+                        {
+                            unary_ops++;
+                            operators.push(the_operator);
+                            the_operator.clear();
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     //increment the number of unary operators we have
                     unary_ops++;
 
