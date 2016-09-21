@@ -26,7 +26,7 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("1+2*3");
+		int result = e.eval("++++2-5*(3^2)");
         if (e.get_is_bool() == true)
         {
             if (result == 1)

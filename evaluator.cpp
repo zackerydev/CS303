@@ -2,8 +2,11 @@
 
 const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used for evaluation
 const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
+const string TWO_CHARACTER_OP_1 = "+-><=!&|"; // Stores the first character in a two character operator string
+const string TWO_CHARACTER_OP_2 = "=+-&|"; // Stores the second character in a two character operator string
+const string UNARY_OPERATORS[4] = { "i","!","++","--" };
 
-const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {">,>=,<,<=","+-", "*/%", "^"};
+const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"||","&&","==!=",">,>=,<,<=","+-", "*/%", "^", "-++--!"};
 
 /*const string OPERATORS[] = { "NOT", "INC", "DEC", "NEG", "POW", "MUL","DIV","MOD","ADD","SUB","GREATEQU","GREAT","LESSEQU","LESS", "EQU", "NOTEQU", "AND", "OR" }; // Operators allowed to be pushed to the stack
 
@@ -16,7 +19,7 @@ int Evaluator::eval(const string& expression)
 
 	//Variables for storing an operand or an operator
 	string operand = "";
-	string the_operator;
+	string the_operator ="";
 
 	//Loop through the expression
 	for (si = expression.begin(); si != expression.end(); ++si)
@@ -60,6 +63,13 @@ int Evaluator::eval(const string& expression)
 			stringstream ss(operand);
 			int result;
 			ss >> result;
+            // If we have unary operations to do, do them all and keep going as normal
+            while(unary_ops > 0)
+            {
+                result = compute(result, operators.top());
+                unary_ops--;
+                operators.pop();
+            }
 
 			//Add the number to the operand stack
 			operands.push(result);
@@ -70,12 +80,21 @@ int Evaluator::eval(const string& expression)
 		else //handle operators here
 		{ 
 			//Assign iterator char to operator variable
-            the_operator = *si;
+            the_operator += *si;
+            // Here we check to make sure the next item isn't the expressions end, we also check if the operator we are at is an operator that 
+            // could possibly have 2 characters, and if the next item in the expression can be the second item in a 2 character operator
+            // lastly, we check to see if the length of the operator currently is less than 2 (to assure we dont create a +++ operator etc)
+            if (((si + 1) != expression.end()) && (TWO_CHARACTER_OP_2.find(*(si + 1)) != -1) && (the_operator.length() <= 2) && (TWO_CHARACTER_OP_1.find(the_operator) != -1))
+            {
+                continue;
+            }
+                
 
             // Check if the operator is an opening parentheses
             if (OPEN_PARENTHESES.find(the_operator) != -1)
             {
                 operators.push(the_operator);
+                the_operator.clear();
                 continue;
             }
 
@@ -84,7 +103,28 @@ int Evaluator::eval(const string& expression)
             {	
 				//something goofy going on here..we lose the data in the stacks?
 				solve_parentheses(CLOSED_PARENTHESES.find(the_operator));
+                the_operator.clear();
 				continue;
+            }
+
+            // Loop through the array of possible 2 character operators and see if the operator we are at is a unary
+            for (int i = 0; i < 4; i++)
+            {
+                if (UNARY_OPERATORS[i] == the_operator)
+                { //If it is unary
+                    
+                    //increment the number of unary operators we have
+                    unary_ops++;
+
+                    operators.push(the_operator);
+                    the_operator.clear();
+                    break;
+                }
+            }
+            // Check if we have unary operations to do and go back to the top if so
+            if (unary_ops > 0)
+            {
+                continue;
             }
 
 			//Check to see if there are operators present for comparison
@@ -99,6 +139,7 @@ int Evaluator::eval(const string& expression)
 			}
 			//operators stack is empty or the current operator has greater precedence, add it to the stack
 			operators.push(the_operator);
+            the_operator.clear();
 		}
 	}
 	//Done iterating through the expression, now compute the expressions in the stacks
@@ -282,7 +323,51 @@ int Evaluator::compute(int first, int second, string operation){
             result = first <= second;
             is_bool = true;
         }
+        else if (operation == "==")
+        {
+            result = first == second;
+            is_bool = true;
+        }
+        else if (operation == "!=")
+        {
+            result = first != second;
+            is_bool = true;
+        }
+        else if (operation == "&&")
+        {
+            result = first && second;
+            is_bool = true;
+        }
+        else if (operation == "||")
+        {
+            result = first || second;
+            is_bool = true;
+        }
+ 
 	return result;
+}
+
+int Evaluator::compute(int first, string operation)
+{
+    int result;
+        if (operation == "!")
+        {
+            result = !first;
+            is_bool = true;
+        }
+        else if (operation == "++")
+        {
+            result = ++first;
+        }
+        else if (operation == "--")
+        {
+            result = --first;
+        }
+        else if (operation == "-")
+        {
+            result = -first;
+        }
+   return result;
 }
 
 bool Evaluator::is_greater_precedence(string current){
