@@ -15,10 +15,14 @@ public:
     
     int eval(const string&); //Evaluates the infix expression
     bool get_is_bool(); //
+    void reset_bool()
+    {
+        is_bool = false;
+    }
 
 private:
     
-	const static int NUMBER_OF_PRECEDENCES = 8; //Stores the number of precendences accounted for
+	const static int NUMBER_OF_PRECEDENCES = 10; //Stores the number of precendences accounted for
 	const static string OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES]; //Stores operators grouped by precedence in string
    
         
@@ -41,7 +45,7 @@ private:
 	After the functions runs, operands stack will be empty and operands will contain the final result*/
 	void solve(string); //Runs 
    
-    void solve_parentheses(int);  /* Same as the solve function above but it only goes until it finds an opening paren, then stops. Pass in the index of the closing paren type so we know which opening parenthesis to match it with*/
+    //void solve_parentheses(int);  /* Same as the solve function above but it only goes until it finds an opening paren, then stops. Pass in the index of the closing paren type so we know which opening parenthesis to match it with*/
 	
 	void solve();//The post iteration version of the function
 
@@ -50,6 +54,8 @@ private:
 	int compute(int,int,string);//Computes the given operands and operator->output an integer
 
 	bool is_greater_precedence(string); //Compares operator precendence and returns true/false
+    
+
 };
 
 #endif

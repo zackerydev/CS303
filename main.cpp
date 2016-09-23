@@ -26,22 +26,28 @@ int main(){
 
 	Evaluator e;
 	try{
-		int result = e.eval("++++2-5*(3^2)");
-        if (e.get_is_bool() == true)
+        string equations[7] = { "1+2*3", "2+2^2*3", "1==2", "1+3 > 2", "(4>=4) && 0", "(1+2)*3", "++++2-5*(3^2)" };
+        for (int i = 0; i < 7; i++)
         {
-            if (result == 1)
+            int result = e.eval(equations[6]);
+            if (e.get_is_bool() == true)
             {
-                cout << "True" << endl;
+                if (result == 1)
+                {
+                    cout << "True" << endl;
+                }
+                else
+                {
+                    cout << "False" << endl;
+                }
             }
             else
             {
-                cout << "False" << endl;
+                cout << result << endl;
             }
+            e.reset_bool();
         }
-        else
-        {
-            cout << result << endl;
-        }
+		
 	}
 	catch (int e)
     {
