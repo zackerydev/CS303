@@ -15,9 +15,15 @@ public:
     
     int eval(const string&); //Evaluates the infix expression
     bool get_is_bool(); //
+    int get_index()
+    {
+        return index;
+    }
 
 private:
-    
+    int index = 0;
+
+
 	const static int NUMBER_OF_PRECEDENCES = 10; //Stores the number of precendences accounted for
 	const static string OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES]; //Stores operators grouped by precedence in string
    

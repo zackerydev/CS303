@@ -29,7 +29,15 @@ int main(){
     Evaluator e;
     try
     {
-        int result = e.eval("++++2-5*(3^2)");
+        //Parser p = Parser("10+ ++<3");
+        //while (p.has_more_tokens())
+        //{
+        //    Token t = p.next_token();
+        //    cout << t.the_token << endl;
+        //}
+
+
+        int result = e.eval("10+ ++<3");
         // ++++2-5*(3^2)
         if (e.get_is_bool() == true)
         {
@@ -50,17 +58,17 @@ int main(){
     catch (int num)
     {
         if (num == 10)
-            cout << "Expression cannot start with a closing parentheses" << endl;
+            cout << "Expression cannot start with a closing parentheses @ char " << e.get_index() << endl;
         else if (num == 20)
-            cout << "Expression cannot start with a binary operator" << endl;
+            cout << "Expression cannot start with a binary operator @ char " << e.get_index() << endl;
         else if(num == 30)
-            cout << "Two binary operators in a row" << endl;
+            cout << "Two binary operators in a row @ char " << e.get_index() << endl;
         else if(num == 40)
-            cout << "Two operands in a row" << endl;
+            cout << "Two operands in a row @ char " << e.get_index()+1 << endl;
         else if(num == 50)
-            cout << "A unary operand can't be followed by a binary operator" << endl;
+            cout << "A unary operand can't be followed by a binary operator @ char " << e.get_index()+1 << endl;
         else if(num == 60)
-            cout << "Divide by zero error" << endl;
+            cout << "Divide by zero error @ char " << e.get_index()-1 << endl;
         /*switch(num)
         {
         case 10:

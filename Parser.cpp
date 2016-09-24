@@ -46,7 +46,7 @@ bool Parser::has_more_tokens(){
 			start = source.find(*si._Ptr,start);
 
 			//If this operator char and the next operator char are both not parenthesis
-			if (is_operator(TWO_CHARACTER_OP_1,*si._Ptr) && is_operator(TWO_CHARACTER_OP_2,*(si+1)))
+			if (is_operator(TWO_CHARACTER_OP_1,*si._Ptr) && is_operator(TWO_CHARACTER_OP_2,*(si+1)) && !isspace(*(si+1)))
 			{
 				iterate_ptr = 2;
 			}

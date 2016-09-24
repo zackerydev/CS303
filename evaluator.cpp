@@ -18,7 +18,6 @@ const int PRECEDENCE[] = { 8,8,8,8,7,6,6,6,5,5,4,4,4,4,3,3,2,1 }; // Precedence 
 
 int Evaluator::eval(const string& expression)
 {
-    int index = 0;
     int operand_flag = 0; // These  are variables that will determine if we get two operands in a row or two binary operators in a row
     int operator_flag = 0;
 	//Declare iterator
@@ -77,6 +76,9 @@ int Evaluator::eval(const string& expression)
                 operators.pop();
             }
             operands.push(operand);
+            if (t.the_token.length() > 1)
+                index++;
+            index++;
         }
         else if (ALL_OPERATORS.find(t.the_token) != -1)
         {
@@ -86,6 +88,9 @@ int Evaluator::eval(const string& expression)
             {
                 unary_ops++;
                 operators.push(t.the_token);
+                index++;
+                if (t.the_token.length() > 1)
+                    index++;
                 continue;
             }
             
@@ -98,6 +103,9 @@ int Evaluator::eval(const string& expression)
             {
                 unary_ops++;
                 operators.push(t.the_token);
+                index++;
+                if (t.the_token.length() > 1)
+                    index++;
                 continue;
             }
             if (unary_ops > 0)
@@ -115,6 +123,9 @@ int Evaluator::eval(const string& expression)
                 }
             }
             operators.push(t.the_token);
+            index++;
+            if (t.the_token.length() > 1)
+                index++;
         }
     }
 
