@@ -1,13 +1,16 @@
 #include "evaluator.h"
+#include "Parser.h"
 
-int Evaluator::unary_ops = 0;
+using namespace std;
+
 const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used for evaluation
 const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
 const string TWO_CHARACTER_OP_1 = "+-><=!&|"; // Stores the first character in a two character operator string
 const string TWO_CHARACTER_OP_2 = "=+-&|"; // Stores the second character in a two character operator string
 const string UNARY_OPERATORS[4] = { "-","!","++","--" }; // Stores all unary operators "negative" is a place holder for -
-
-const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"||","&&","==!=",">,>=,<,<=","+-", "*/%", "^", "-++--!"};
+const string ALL_OPERATORS = "&&||==!=>>=<<=+-*/%^-++--!({[]})";
+const string BINARY_OPERATORS = "&&||==!=>>=<<=+-*/%^";
+const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"||","&&","==!=",">,>=,<,<=","+-", "*/%", "^", "-++--!","({[", "]})"};
 
 /*const string OPERATORS[] = { "NOT", "INC", "DEC", "NEG", "POW", "MUL","DIV","MOD","ADD","SUB","GREATEQU","GREAT","LESSEQU","LESS", "EQU", "NOTEQU", "AND", "OR" }; // Operators allowed to be pushed to the stack
 
@@ -15,153 +18,109 @@ const int PRECEDENCE[] = { 8,8,8,8,7,6,6,6,5,5,4,4,4,4,3,3,2,1 }; // Precedence 
 
 int Evaluator::eval(const string& expression)
 {
+    int index = 0;
+    int operand_flag = 0; // These  are variables that will determine if we get two operands in a row or two binary operators in a row
+    int operator_flag = 0;
 	//Declare iterator
-	string::const_iterator si; 
+	//string::const_iterator si; 
 
-	//Variables for storing an operand or an operator
-	string operand = "";
-	string the_operator ="";
+    Parser p = Parser(expression);
+    int unary_ops = 0;
 
-	//Loop through the expression
-	for (si = expression.begin(); si != expression.end(); ++si)
-	{
-		/******BAD CHARACTER BLOCK******/
-		
-		//Check for valid operator and digit as iterator
-		if (!is_operator(*si) && !isdigit(*si))
-		{
-			//If we found a space character, go back to top of the loop
-			try
-			{
-				if (isspace(*si))
-				{
-					continue;
-				}
-			
-			//invalid character
-			throw 20;
-			}
-			catch(int e)
-			{
-				 cout << "Character is invalid. Exception Nr. " << e << '\n';
-			}
-		}
-		
-		/******GOOD CHARACTER BLOCK******/
+    while (p.has_more_tokens())
+    {
+        Token t = p.next_token();
+        if (operators.empty() && (CLOSED_PARENTHESES.find(t.the_token) != -1))
+        {
+            throw 10;
+        }
 
-		if (isdigit(*si))//handle operands here
-		{ 
-			//Add the char to operand string
-			operand += *si;
-			
-			//Check next char to add to operand string
-			if ((si+1) != expression.end() && isdigit(*(si+1))) 
-			{
-				continue;
-			}
+        if (operators.empty() && t.is_binary == true && operands.empty() && !isdigit(t.the_token[0]) && (OPEN_PARENTHESES.find(t.the_token) == -1) && (CLOSED_PARENTHESES.find(t.the_token) == -1))
+        {
+            throw 20;
+        }
 
-			//Convert the full number(operand string) to an int
-			stringstream ss(operand);
-			int result;
-			ss >> result;
-            // If we have unary operations to do, do them all and keep going as normal
-            while(unary_ops > 0)
+        if ((t.is_binary == true) && (BINARY_OPERATORS.find(t.the_token) != -1))
+        {
+            operator_flag++;
+            if (operator_flag >= 2)
             {
-                result = compute(result, operators.top());
+                throw 30;
+            }
+        }
+        else if(operands.empty())
+        {
+            
+        }
+
+        else
+        {
+            operator_flag--;
+        }
+
+
+       
+
+
+        if (isdigit(t.the_token[0])) //Check if any part of the token is a digit, if so its an operand
+        {
+            operand_flag++;
+            if (operand_flag >= 2)
+            {
+                throw 40;
+            }
+            int operand = stoi(t.the_token);
+            while (unary_ops > 0)
+            {
+                operand = compute(operand, operators.top());
                 unary_ops--;
                 operators.pop();
             }
-
-			//Add the number to the operand stack
-			operands.push(result);
-
-			//Clear the string container for the next operand
-			operand.clear();
-		}
-		else //handle operators here
-		{ 
-			//Assign iterator char to operator variable
-            the_operator += *si;
-            // Here we check to make sure the next item isn't the expressions end, we also check if the operator we are at is an operator that 
-            // could possibly have 2 characters, and if the next item in the expression can be the second item in a 2 character operator
-            // lastly, we check to see if the length of the operator currently is less than 2 (to assure we dont create a +++ operator etc)
-            if (((si + 1) != expression.end()) && (TWO_CHARACTER_OP_2.find(*(si + 1)) != -1) && (the_operator.length() <= 2) && (TWO_CHARACTER_OP_1.find(the_operator) != -1))
+            operands.push(operand);
+        }
+        else if (ALL_OPERATORS.find(t.the_token) != -1)
+        {
+            if(!operands.empty())
+                operand_flag--;
+            if (t.the_token == "-" && (operands.empty()))
             {
+                unary_ops++;
+                operators.push(t.the_token);
                 continue;
             }
-                
-
-            // Check if the operator is an opening parentheses
-            if (OPEN_PARENTHESES.find(the_operator) != -1)
+            
+            if (CLOSED_PARENTHESES.find(t.the_token) != -1)
             {
-                operators.push(the_operator);
-                the_operator.clear();
+                solve(t.the_token);
                 continue;
             }
-
-            // Check if the operators is a closing parentheses
-            if (CLOSED_PARENTHESES.find(the_operator) != -1) 
-            {	
-				//something goofy going on here..we lose the data in the stacks?
-				solve_parentheses(CLOSED_PARENTHESES.find(the_operator));
-                the_operator.clear();
-				continue;
-            }
-
-            // Loop through the array of possible 2 character operators and see if the operator we are at is a unary
-            for (int i = 0; i < 4; i++)
+            else if(t.is_unary == true)
             {
-                if (UNARY_OPERATORS[i] == the_operator)
-                { //If it is unary
-                    if (i == 0) // Deals with the case where we have a "-" with no numbers in front in which case we treat it as a negation
-                    {
-                        if (operands.empty())
-                        {
-                            unary_ops++;
-                            operators.push(the_operator);
-                            the_operator.clear();
-                            break;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    //increment the number of unary operators we have
-                    unary_ops++;
-
-                    operators.push(the_operator);
-                    the_operator.clear();
-                    break;
-                }
+                unary_ops++;
+                operators.push(t.the_token);
+                continue;
             }
-            // Check if we have unary operations to do and go back to the top if so
             if (unary_ops > 0)
             {
-                continue;
+                throw 50;
             }
+            // Check to see if there are operators for comparison
+            else if (!operators.empty())
+            {
+                //Check to see if the current operator has lesser precedence than the top operator in the stack
+                if (!is_greater_precedence(t.the_token))
+                {
+                    // The current operator has lesser precedence compute everything
+                    solve(t.the_token);
+                }
+            }
+            operators.push(t.the_token);
+        }
+    }
 
-			//Check to see if there are operators present for comparison
-			if (!operators.empty())
-			{
-				//Check to see if the current operator has lesser precedence than the top operator in stack
-				if (!is_greater_precedence(the_operator)) 
-				{
-					//The current operator has lesser precedence, compute everything in the stacks
-					solve(the_operator);
-				}
-			}
-			//operators stack is empty or the current operator has greater precedence, add it to the stack
-			operators.push(the_operator);
-            the_operator.clear();
-		}
-	}
-	//Done iterating through the expression, now compute the expressions in the stacks
-	solve();
-
-	int final_result = operands.top(); 
-	operands.pop();
-	return final_result;
+    solve(); // Solve the rest, (NOTE: We are giving it a closing parentheses because the solve function treats it as nothing)
+    int final_result = operands.top();
+    return final_result;
 }
 
 bool Evaluator::is_operator(char c) //Check to see if the char is an operator
@@ -174,21 +133,34 @@ void Evaluator::solve(string current_operator)
 {
 	//Declare operand and operator variables
 	int var1, var2;
-	string the_operator;
+	string the_operator;  
 
-	
+    if (CLOSED_PARENTHESES.find(current_operator) != -1)
+    {
+        if (operators.empty())
+        {
+            return;
+        }
+        else if (OPEN_PARENTHESES.find(operators.top()) != -1)
+        {
+            operators.pop();
+            return;
+        }
+        current_operator = operators.top();
+    }
+
 	while (!operators.empty() && !is_greater_precedence(current_operator))
 	{
+        the_operator = operators.top();
+        operators.pop();
+
+        if (OPEN_PARENTHESES.find(the_operator) != -1)
+        {
+            break;
+        }
+
 		var1 = operands.top();
 		operands.pop();
-
-		the_operator = operators.top();
-		operators.pop();
-
-		if (operands.empty())
-		{
-			throw exception("binary operator has no second operand.");
-		}
 
 		var2 = operands.top();
 		operands.pop();
@@ -196,74 +168,7 @@ void Evaluator::solve(string current_operator)
 		operands.push(compute(var2,var1,the_operator));
 	}
 }
-void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the solve() function again but it stops when it hits an open parentheses
-     //Pass in the index of the paren type so we know which opening parenthesis to match it with 
-	 //Keep looping while ending paren != opening paren .. when this condition evaluates to false, we'll know we;ve found the correspoding paren and stop evaluating 
-	 //BUT if we get down to an empty stack within the loop, then we'll know an opening paren was never there
 
-	 //while(open.find(open_paren) != closed.find(closed_paren)){}
-
-     int var1, var2;
-	 string the_operator;
-	 //Keep track of what type of opening parenthesis is encountered
-	 int index_of_open;
-	 
-	try
-	{
-	 //Keep doing computations while there's still operators
-     while (!operators.empty())
-     {
-		 //Keep updating if we found an open parenthesis or not
-		 index_of_open = OPEN_PARENTHESES.find(operators.top());
-
-		 //A parenthesis was encountered
-		 if (index_of_open >= 0)
-		 {
-			try
-			{ 
-			//The parenthesis match!
-			 if (index_of_open == index_of_closed)
-			 {
-				 //pop the matched parenthesis out of the stack.
-				 operators.pop();
-				 return;
-			 }
-			 //Parenthesis type don't match up
-			 throw 30;
-			}
-			catch(int d)
-			{
-				cout << "Pair of parenthesis did not match." << endl;
-			}
-		 }
-
-        var1 = operands.top();
-        operands.pop();
-
-		the_operator = operators.top();
-        operators.pop();
-
-		if (operands.empty())
-		{
-			throw exception("binary operator has no second operand.");
-		}
-        
-        var2 = operands.top();
-        operands.pop();
-	
-        operands.push(compute(var2, var1, the_operator));
-     }
-
-	 //At this point, operators stack is empty but no opening parenthesis was ever found.
-	 throw 40;
-	}
-	catch(int f)
-	{
-		cout << "Cannot have closed parenthesis without an opening parenthesis." << endl;
-	}
-
-	 
-}
 void Evaluator::solve(){
 
 	int var1, var2;
@@ -276,11 +181,6 @@ void Evaluator::solve(){
 
 		the_operator = operators.top();
 		operators.pop();
-
-		if (operands.empty())
-		{
-			throw exception("binary operator has no second operand.");
-		}
 
 		var2 = operands.top();
 		operands.pop();
@@ -320,7 +220,7 @@ int Evaluator::compute(int first, int second, string operation){
         {
 			if (second == 0)
 			{
-				throw exception("Cannot divide by 0");
+				throw 60;
 			}
             result = first / second;
         }

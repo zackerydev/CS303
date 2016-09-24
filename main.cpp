@@ -26,14 +26,66 @@ using namespace std;
 
 int main(){
 
-	Parser p = Parser("  [11 +] 23 ");
+    Evaluator e;
+    try
+    {
+        int result = e.eval("++++2-5*(3^2)");
+        // ++++2-5*(3^2)
+        if (e.get_is_bool() == true)
+        {
+            if (result == 1)
+            {
+                cout << "True" << endl;
+            }
+            else
+            {
+                cout << "False" << endl;
+            }
+        }
+        else
+        {
+            cout << result << endl;
+        }
+    }
+    catch (int num)
+    {
+        if (num == 10)
+            cout << "Expression cannot start with a closing parentheses" << endl;
+        else if (num == 20)
+            cout << "Expression cannot start with a binary operator" << endl;
+        else if(num == 30)
+            cout << "Two binary operators in a row" << endl;
+        else if(num == 40)
+            cout << "Two operands in a row" << endl;
+        else if(num == 50)
+            cout << "A unary operand can't be followed by a binary operator" << endl;
+        else if(num == 60)
+            cout << "Divide by zero error" << endl;
+        /*switch(num)
+        {
+        case 10:
+            cout << "Expression cannot start with a closing parentheses" << endl;
+        case 20:
+            cout << "Expression cannot start with a binary operator" << endl;
+        case 30:
+            cout << "Two binary operators in a row" << endl;
+        case 40:
+            cout << "Two operands in a row" << endl;
+        case 50:
+            cout << "A unary operand can't be followed by a binary operator" << endl;
+        case 60:
+            cout << "Divide by zero error" << endl;
 
-	while (p.has_more_tokens())
-	{
-		Token t = p.next_token();
-	}
-	
-
+        } */
+    }
+        
+    /* Exception Chart:
+       10: Expression Cannot Start with a closing parentheses
+       20: Expression can't start with a binary operator
+       30: Two Binary Operators in a row
+       40: Two Operands in a row
+       50: A unary operand can't be followed by a binary operator
+       60: 1/0 Divide By Zero Error*/
 
 
 	/*int start = exp.find(*si._Ptr);
@@ -43,21 +95,7 @@ int main(){
 	//Evaluator e;
 	//try{
 	//	int result = e.eval("3*(<3+2)");
- //       if (e.get_is_bool() == true)
- //       {
- //           if (result == 1)
- //           {
- //               cout << "True" << endl;
- //           }
- //           else
- //           {
- //               cout << "False" << endl;
- //           }
- //       }
- //       else
- //       {
- //           cout << result << endl;
- //       }
+        
 	//}
 	///*catch (int e)*/
 	//catch (exception e)
@@ -65,7 +103,7 @@ int main(){
 	//	/*cout << "Evaluator object could not read in the expression" << endl;*/
 	//	cout << e.what() << endl;
 	//}
- //   system("pause");
+    system("pause");
 	return 0;
     
 }

@@ -1,6 +1,8 @@
 #include "Parser.h"
 
 const string OPERATOR_CHARS = "!+-^*/%<>=&|([{)]}";
+const string TWO_CHARACTER_OP_1 = "+-><=!&|";
+const string TWO_CHARACTER_OP_2 = "=+-&|";
 const string DIGITS = "0123456789";
 
 Token Parser::next_token(){
@@ -44,7 +46,7 @@ bool Parser::has_more_tokens(){
 			start = source.find(*si._Ptr,start);
 
 			//If this operator char and the next operator char are both not parenthesis
-			if (is_operator(OPERATOR_CHARS.substr(0,11),*si._Ptr) && is_operator(OPERATOR_CHARS.substr(0,11),*(si+1)))
+			if (is_operator(TWO_CHARACTER_OP_1,*si._Ptr) && is_operator(TWO_CHARACTER_OP_2,*(si+1)))
 			{
 				iterate_ptr = 2;
 			}
