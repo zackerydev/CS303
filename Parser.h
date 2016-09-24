@@ -23,7 +23,7 @@ private:
 
 	char peek_next(); //return the next character in the source
 
-	bool is_operator(string, char); //search a string of oeprators to see if the current char is an operator
+	bool is_operator(const string&, char); //search a string of oeprators to see if the current char is an operator
 
 	string source; //The string to be split into tokens
 
