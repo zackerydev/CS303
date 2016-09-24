@@ -16,38 +16,56 @@ are boolean operators it will return a one or a zero which we can convert. Then 
 the answer to a true or false bool. We will have to account for input on the fly, removing whitespace and other things. Also this function will
 deal with the error handling. We will also need to have a precedence function to define and use the operators at the proper level. */
 
-
-
 #include "evaluator.h"
+#include "Parser.h"
+#include "Token.h"
+
+//"++++2-5*(3^2)"
 
 using namespace std;
 
 int main(){
 
-	Evaluator e;
-	try{
-		int result = e.eval("++++2-5*(3^2)");
-        if (e.get_is_bool() == true)
-        {
-            if (result == 1)
-            {
-                cout << "True" << endl;
-            }
-            else
-            {
-                cout << "False" << endl;
-            }
-        }
-        else
-        {
-            cout << result << endl;
-        }
+	Parser p = Parser("  [11 +] 23 ");
+
+	while (p.has_more_tokens())
+	{
+		Token t = p.next_token();
 	}
-	catch (int e)
-    {
-		cout << "Evaluator object could not read in the expression" << endl;
-	}
-    system("pause");
+	
+
+
+
+	/*int start = exp.find(*si._Ptr);
+	int end = exp.find_first_not_of("0123456789", start);
+	string test = exp.substr(start, end - start);*/
+
+	//Evaluator e;
+	//try{
+	//	int result = e.eval("3*(<3+2)");
+ //       if (e.get_is_bool() == true)
+ //       {
+ //           if (result == 1)
+ //           {
+ //               cout << "True" << endl;
+ //           }
+ //           else
+ //           {
+ //               cout << "False" << endl;
+ //           }
+ //       }
+ //       else
+ //       {
+ //           cout << result << endl;
+ //       }
+	//}
+	///*catch (int e)*/
+	//catch (exception e)
+ //   {
+	//	/*cout << "Evaluator object could not read in the expression" << endl;*/
+	//	cout << e.what() << endl;
+	//}
+ //   system("pause");
 	return 0;
     
 }

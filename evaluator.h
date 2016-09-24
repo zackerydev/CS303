@@ -28,7 +28,8 @@ private:
 
     bool is_bool; //Bool that determines if infix statement is a true/false expression
 
-    int unary_ops = 0; // The amount of unary operations we have to do. We will do them all in place because they have the highest precedence.
+    //int unary_ops = 0; // The amount of unary operations we have to do. We will do them all in place because they have the highest precedence.
+	static int unary_ops;
 
 	bool is_operator(char); //Returns true if the char is an operator or digit, false for anything else
 

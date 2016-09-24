@@ -1,5 +1,6 @@
 #include "evaluator.h"
 
+int Evaluator::unary_ops = 0;
 const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used for evaluation
 const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
 const string TWO_CHARACTER_OP_1 = "+-><=!&|"; // Stores the first character in a two character operator string
@@ -181,11 +182,16 @@ void Evaluator::solve(string current_operator)
 		var1 = operands.top();
 		operands.pop();
 
-		var2 = operands.top();
-		operands.pop();
-
 		the_operator = operators.top();
 		operators.pop();
+
+		if (operands.empty())
+		{
+			throw exception("binary operator has no second operand.");
+		}
+
+		var2 = operands.top();
+		operands.pop();
 
 		operands.push(compute(var2,var1,the_operator));
 	}
@@ -233,12 +239,17 @@ void Evaluator::solve_parentheses(int index_of_closed) { // Essentially just the
 
         var1 = operands.top();
         operands.pop();
+
+		the_operator = operators.top();
+        operators.pop();
+
+		if (operands.empty())
+		{
+			throw exception("binary operator has no second operand.");
+		}
         
         var2 = operands.top();
         operands.pop();
-        
-        the_operator = operators.top();
-        operators.pop();
 	
         operands.push(compute(var2, var1, the_operator));
      }
@@ -263,11 +274,16 @@ void Evaluator::solve(){
 		var1 = operands.top();
 		operands.pop();
 
-		var2 = operands.top();
-		operands.pop();
-
 		the_operator = operators.top();
 		operators.pop();
+
+		if (operands.empty())
+		{
+			throw exception("binary operator has no second operand.");
+		}
+
+		var2 = operands.top();
+		operands.pop();
 
 		//Open parenthesis was unaccounted for
 		//Don't need to check for closing since this was already handled in the solve_parenthesis
@@ -302,6 +318,10 @@ int Evaluator::compute(int first, int second, string operation){
         }
         else if (operation == "/")
         {
+			if (second == 0)
+			{
+				throw exception("Cannot divide by 0");
+			}
             result = first / second;
         }
         else if (operation == "%")
