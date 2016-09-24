@@ -43,9 +43,9 @@ bool Parser::has_more_tokens(){
 			int iterate_ptr = 1;
 
 			//set start to the index of the character that si is pointing to
-			start = source.find(*si._Ptr,start);
+			start = source.find(*si,start);
 
-			//If this operator char and the next operator char are both not parenthesis
+			//If this operator char and the next operator char are both viable two character operators increase the size of the item by 2
 			if (is_operator(TWO_CHARACTER_OP_1,*si._Ptr) && is_operator(TWO_CHARACTER_OP_2,*(si+1)) && !isspace(*(si+1)))
 			{
 				iterate_ptr = 2;

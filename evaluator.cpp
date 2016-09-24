@@ -5,16 +5,9 @@ using namespace std;
 
 const string OPEN_PARENTHESES = "([{";//Stores open parentheses in string used for evaluation
 const string CLOSED_PARENTHESES = ")]}";//Stores closed parentheses
-const string TWO_CHARACTER_OP_1 = "+-><=!&|"; // Stores the first character in a two character operator string
-const string TWO_CHARACTER_OP_2 = "=+-&|"; // Stores the second character in a two character operator string
-const string UNARY_OPERATORS[4] = { "-","!","++","--" }; // Stores all unary operators "negative" is a place holder for -
 const string ALL_OPERATORS = "&&||==!=>>=<<=+-*/%^-++--!({[]})";
 const string BINARY_OPERATORS = "&&||==!=>>=<<=+-*/%^";
 const string Evaluator::OPERATOR_PRECEDENCE[NUMBER_OF_PRECEDENCES] = {"||","&&","==!=",">,>=,<,<=","+-", "*/%", "^", "-++--!","({[", "]})"};
-
-/*const string OPERATORS[] = { "NOT", "INC", "DEC", "NEG", "POW", "MUL","DIV","MOD","ADD","SUB","GREATEQU","GREAT","LESSEQU","LESS", "EQU", "NOTEQU", "AND", "OR" }; // Operators allowed to be pushed to the stack
-
-const int PRECEDENCE[] = { 8,8,8,8,7,6,6,6,5,5,4,4,4,4,3,3,2,1 }; // Precedence of the above operators*/
 
 int Evaluator::eval(const string& expression)
 {
@@ -26,19 +19,16 @@ int Evaluator::eval(const string& expression)
     Parser p = Parser(expression);
     int unary_ops = 0;
 
-    while (p.has_more_tokens())
+    while (p.has_more_tokens()) // While our parser can give us tokens to compute
     {
         Token t = p.next_token();
-        if (operators.empty() && (CLOSED_PARENTHESES.find(t.the_token) != -1))
-        {
+        if (operators.empty() && (CLOSED_PARENTHESES.find(t.the_token) != -1)) //If the first value is a closing paren, throw exception{
             throw 10;
-        }
 
+        // If the first character in the expression is a binary operator, again throw an exception to be handled in main
         if (operators.empty() && t.is_binary == true && operands.empty() && !isdigit(t.the_token[0]) && (OPEN_PARENTHESES.find(t.the_token) == -1) && (CLOSED_PARENTHESES.find(t.the_token) == -1))
-        {
             throw 20;
-        }
-
+        //If the token is a binary operator, check to see if we flagged a binary operator before, if we have throw an exception
         if ((t.is_binary == true) && (BINARY_OPERATORS.find(t.the_token) != -1))
         {
             operator_flag++;
@@ -47,68 +37,54 @@ int Evaluator::eval(const string& expression)
                 throw 30;
             }
         }
-        else if(operands.empty())
-        {
-            
-        }
-
+        else if (operands.empty())
+            ;       // Do nothing here, we just keep going
         else
-        {
-            operator_flag--;
-        }
-
-
-       
-
+            operator_flag--; // Subtract from the flag because what we got wasn't a binary operator
 
         if (isdigit(t.the_token[0])) //Check if any part of the token is a digit, if so its an operand
         {
-            operand_flag++;
-            if (operand_flag >= 2)
+            operand_flag++; // We found an operands, increase flag
+            if (operand_flag >= 2) // If we find two operands in a row, throw exception
             {
                 throw 40;
             }
-            int operand = stoi(t.the_token);
-            while (unary_ops > 0)
+            int operand = stoi(t.the_token); // Change the string token to an int
+            while (unary_ops > 0) // Check if we have unary operators to do, we do these in place because they have the highest precedence
             {
                 operand = compute(operand, operators.top());
                 unary_ops--;
                 operators.pop();
             }
-            operands.push(operand);
-            if (t.the_token.length() > 1)
-                index++;
-            index++;
+            operands.push(operand); // Push the operand onto the stack
+            index += t.the_token.length(); // Increment the index by however long the token is
         }
-        else if (ALL_OPERATORS.find(t.the_token) != -1)
+        else if (ALL_OPERATORS.find(t.the_token) != -1) // Check if token is an operator
         {
-            if(!operands.empty())
+            if(!operands.empty()) // We can decrement the operand flag if we find an operator and we still have operands
                 operand_flag--;
-            if (t.the_token == "-" && (operands.empty()))
+            if (t.the_token == "-" && (operands.empty())) // Special case for the minus symbol because it could be binary or unary
             {
-                unary_ops++;
-                operators.push(t.the_token);
-                index++;
-                if (t.the_token.length() > 1)
-                    index++;
+                unary_ops++; // We have a unary operator, increase the flag to be checked in the operand block
+                operators.push(t.the_token); // Push Unary on stack for later
+                index += t.the_token.length(); // Increase index by length of token
                 continue;
             }
             
-            if (CLOSED_PARENTHESES.find(t.the_token) != -1)
+            if (CLOSED_PARENTHESES.find(t.the_token) != -1) // Check if closed parens and then compute until another paren if found.
             {
                 solve(t.the_token);
                 continue;
             }
-            else if(t.is_unary == true)
+            else if(t.is_unary == true) //Normally non-minus symbol unary block, increase number of operations ands push operator
             {
                 unary_ops++;
                 operators.push(t.the_token);
-                index++;
-                if (t.the_token.length() > 1)
-                    index++;
+                index += t.the_token.length();
                 continue;
             }
-            if (unary_ops > 0)
+            if (unary_ops > 0) //If we ever reach this point and still have unary operators we must have had a binary operator after a unary
+                // So throw an exception
             {
                 throw 50;
             }
@@ -122,10 +98,8 @@ int Evaluator::eval(const string& expression)
                     solve(t.the_token);
                 }
             }
-            operators.push(t.the_token);
-            index++;
-            if (t.the_token.length() > 1)
-                index++;
+            operators.push(t.the_token); // Push the operand onto the stack because it is greater precedence
+            index += t.the_token.length(); // Increase index by token length
         }
     }
 
@@ -185,68 +159,42 @@ void Evaluator::solve(){
 	int var1, var2;
 	string the_operator;
 
-	while (!operators.empty())
+	while (!operators.empty()) // While we still have operators to work with
 	{
-		var1 = operands.top();
+		var1 = operands.top(); // Pop our numbers to solve
 		operands.pop();
 
-		the_operator = operators.top();
+		the_operator = operators.top(); // Pop our operator
 		operators.pop();
 
 		var2 = operands.top();
 		operands.pop();
-
-		//Open parenthesis was unaccounted for
-		//Don't need to check for closing since this was already handled in the solve_parenthesis
-		int index_of_open = OPEN_PARENTHESES.find(the_operator);
-		if (index_of_open >= 0)
-		{
-			try
-			{
-				throw 20;
-			}
-			catch(int g)
-			{
-				cout << "Cannot have an opening parenthesis without closing it." << endl;
-			}
-		}
-			
-		operands.push(compute(var2,var1,the_operator));
+	
+		operands.push(compute(var2,var1,the_operator)); // Compute everything and put the result back onto the operands stack
 	}
 }
 
 int Evaluator::compute(int first, int second, string operation){
-	
+	// This function simply takes the first and second number, and depending on the operation string, does the given operation
 	int result;
 
         if (operation == "^")
-        {
             result = pow(first, second);
-        }
         else if (operation == "*")
-        {
             result = first * second;
-        }
         else if (operation == "/")
         {
-			if (second == 0)
-			{
-				throw 60;
-			}
+            if (second == 0) // Throw exception if expression attempts to divide by zero
+                throw 60;
             result = first / second;
         }
+
         else if (operation == "%")
-        {
             result = first % second;
-        }
         else if (operation == "+")
-        {
             result = first + second;
-        }
         else if (operation == "-")
-        {
             result = first - second;
-        }
         else if (operation == ">")
         {
             result = first > second;
@@ -293,6 +241,7 @@ int Evaluator::compute(int first, int second, string operation){
 
 int Evaluator::compute(int first, string operation)
 {
+    // Same as other compute but this one is overloaded for one operator and operand, used for unary computation
     int result;
         if (operation == "!")
         {
