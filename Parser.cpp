@@ -59,6 +59,7 @@ bool Parser::has_more_tokens(){
 
 		//skip over other characters in the source string
 		si++;
+        start++;
 	}
 
 	//No more tokens
