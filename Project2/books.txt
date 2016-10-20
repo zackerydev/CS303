@@ -1,0 +1,252 @@
+﻿ISBN, Book Title
+054133566, Ulysses by James Joyce 
+675329959, Don Quixote by Miguel de Cervantes 
+729484098, Moby Dick by Herman Melville 
+185915278, Hamlet by William Shakespeare 
+079548236, War and Peace by Leo Tolstoy 
+520780512, The Odyssey by Homer 
+124825481, The Great Gatsby  by F. Scott Fitzgerald 
+138162860, The Divine Comedy  by Dante Alighieri  
+126285408, Madame Bovary by Gustave Flaubert 
+821507024, The Brothers Karamazov  by Fyodor Dostoyevsky 
+812915358, One Hundred Years of Solitude  by Gabriel Garcia Marquez  
+764919686, The Adventures of Huckleberry Finn by Mark Twain 
+811649943, The Iliad by Homer 
+532955518, Lolita  by Vladimir Nabokov 
+752662263, Anna Karenina by Leo Tolstoy  
+622138642, Crime and Punishment  by Fyodor Dostoyevsky 
+106152959, Alice's Adventures in Wonderland  by Lewis Carroll 
+552737423, The Sound and the Fury by William Faulkner 
+052625135, Pride and Prejudice by Jane Austen 
+699030627, The Catcher in the Rye by J. D. Salinger 
+130427542, Wuthering Heights by Emily BrontÃ« 
+032956032, Nineteen Eighty Four by George Orwell 
+975424434, Heart of Darkness by Joseph Conrad 
+525690898, To the Lighthouse  by Virginia Woolf  
+144418159, Absalom Absalom! by William Faulkner 
+887404872, Middlemarch by George Eliot 
+821051431, The Trial by Franz Kafka 
+332990476, One Thousand and One Nights by India/Iran/Iraq/Egypt 
+722498033, The Stories of Anton Chekhov by Anton Chekhov 
+993738163, The Red and the Black by Stendhal 
+706763825, Gulliver's Travels by Jonathan Swift  
+194778749, Catch-22  by Joseph Heller 
+539497718, The Grapes of Wrath  by John Steinbeck 
+635812330, Invisible Man  by Ralph Ellison 
+030026060, The Stranger  by Albert Camus 
+260470520, Great Expectations by Charles Dickens 
+432348257, The Aeneid by Virgil 
+406071858, David Copperfield by Charles Dickens 
+825732516, Mrs. Dalloway  by Virginia Woolf  
+234369910, Beloved by Toni Morrison 
+240499631, The Canterbury Tales by Geoffrey Chaucer 
+213162630, Collected Fiction by Jorge Luis Borges 
+958962211, Leaves of Grass by Walt Whitman 
+209364664, Candide by Voltaire 
+468190210, Jane Eyre by Charlotte BrontÃ« 
+019241416, As I Lay Dying by William Faulkner 
+269862681, The Sun Also Rises  by Ernest Hemingway 
+609771344, The Complete Stories of Franz Kafka by Franz Kafka 
+953252438, Tristram Shandy by Laurence Sterne 
+372270199, The Portrait of a Lady  by Henry James 
+271026936, Oedipus the King by Sophocles 
+824423145, Les MisÃ©rables by Victor Hugo 
+846832985, To Kill a Mockingbird  by Harper Lee 
+077630541, Paradise Lost by John Milton 
+479778819, The Complete Tales and Poems of Edgar Allan Poe by Edgar Allan Poe 
+660595925, Pale Fire  by Vladimir Nabokov 
+447920367, A Passage to India  by E.M. Forster 
+560605967, The Idiot by Fyodor Dostoyevsky 
+026292433, The Scarlet Letter by Nathaniel Hawthorne 
+847908542, Antigone by Sophocles 
+709604311, Faust by Johann Wolfgang von Goethe 
+529408420, The Magic Mountain by Thomas Mann 
+846144467, Dead Souls by Nikolai Gogol 
+546843437, The Metamorphosis by Franz Kafka 
+872883601, Midnight's Children  by Salman Rushdie 
+950759377, Emma by Jane Austen 
+331386630, For Whom the Bell Tolls by Ernest Hemingway 
+442954882, Frankenstein  by Mary Shelley 
+042552863, Journey to the End of The Night by Louis-Ferdinand CÃ©line 
+882720833, Oresteia by Aeschylus 
+883469802, The Old Man and the Sea by Ernest Hemingway 
+324806007, Vanity Fair by William Makepeace Thackeray 
+445966357, The Complete Stories of Flannery O'Connor by Flannery O'Connor 
+721086330, Under the Volcano  by Malcolm Lowry 
+330861636, Time Gargantua and Pantagruel by Francois Rabelais 
+815555796, Tom Jones by Henry Fielding 
+193949373, Fairy Tales and Stories by Hans Christian Anderson 
+296538368, Things Fall Apart  by Chinua Achebe 
+989052576, Time The Flowers of Evil by Charles Baudelaire 
+656979180, Brave New World by Aldous Huxley 
+506319322, The Tin Drum by GÃ¼nter Grass 
+438136004, The Good Soldier by Ford Madox Ford 
+902912484, A Farewell to Arms by Ernest Hemingway 
+713826945, The Possessed by Fyodor Dostoevsky 
+956619393, Poems of Emily Dickinson by Emily Dickinson 
+035221410, On the Road by Jack Kerouac 
+050587710, The Master and Margarita by Mikhail Bulgakov 
+964960134, The Castle by Franz Kafka 
+012563374, Father Goriot by HonorÃ© de Balzac 
+702464283, Stories of Ernest Hemingway by Ernest Hemingway 
+764413204,  Robinson Crusoe by Daniel Defoe 
+699480416, Collected Poems of W. B. Yeats by W. B. Yeats 
+220376799, The Charterhouse of Parma by Stendhal 
+947082776, The Tale of Genji by Murasaki Shikibu 
+802117868, Oedipus at Colonus by Sophocles 
+439495682, Fathers and Sons by Ivan Turgenev 
+456708044, Metamorphoses by Ovid 
+956562451, Decameron by Giovanni Boccaccio 
+185064942, The Waste Land by T. S. Eliot 
+397926236, A Sentimental Education by Gustave Flaubert 
+627482778, Cousin Bette by HonorÃ© de Balzac 
+118536303, Dangerous Liaison by Pierre Choderlos de Laclos 
+583012628, Animal Farm by George Orwell 
+530146989, Tess of the d'Urbervilles by Thomas Hardy 
+633500651, Lord of the Flies  by William Golding 
+746098941, King Lear by William Shakespeare 
+241836127, American Pastoral by Philip Roth 
+559302755, The Age of Innocence by Edith Wharton 
+489063692, The Lord of the Rings by J. R. R. Tolkien  
+085677750, Treasure Island by Robert Louis Stevenson 
+290598713, All the King's Men by Robert Penn Warren 
+542028049, Blood Meridian by Cormac McCarthy 
+472088557, Lord Jim by Joseph Conrad 
+300754528, Gone With the Wind  by Margaret Mitchell 
+565250048, Charlotte's Web by E. B. White 
+745534467, Native Son  by Richard Wright 
+309798465, Buddenbrooks by Thomas Mann 
+734697213, Sons and Lovers by D. H. Lawrence 
+541458700, Rabbit Run  by John Updike 
+882004650, The Little Prince by Antoine de Saint-ExupÃ©ry 
+581402877, Slaughterhouse-Five  by Kurt Vonnegut 
+826524845, Their Eyes Were Watching God  by Zora Neale Hurston 
+061482116, A Season in Hell by Arthur Rimbaud 
+506990689, Household Tales by Brothers Grimm 
+255477254, The Count of Monte Cristo by Alexandre Dumas 
+214631068, My Antonia by Willa Cather 
+033241383, A Doll's House by Henrik Ibsen 
+497524684, The Ambassadors by Henry James 
+202607106, The Moviegoer by Walker Percy 
+682204889, The Tempest by William Shakespeare 
+639220326, Nostromo by Joseph Conrad 
+339644437, The Complete Sherlock Holmes by Arthur Conan Doyle 
+045523942, Electra by Sophocles 
+667890032, Medea by Euripides 
+930122831, Doctor Faustus by Thomas Mann 
+817593217, Collected Poems by Wallace Stevens 
+821082051, The Big Sleep by Raymond Chandler 
+340447467, One Flew Over the Cuckoo's Nest  by Ken Kesey 
+329373788, Lost Illusions by HonorÃ© de Balzac 
+187734307, Bleak House by Charles Dickens 
+351083536, The Strange Case of Dr. Jekyll and Mr. Hyde by Robert Louis Stevenson 
+059725023, Doctor Zhivago by Boris Pasternak 
+528803995, Dubliners by James Joyce 
+631427433, The Wind in the Willows by Kenneth Grahame 
+009475572, Light in August  by William Faulkner 
+112213362, Twenty Thousand Leagues Under the Sea by Jules Verne 
+446843710, The Plague by Albert Camus 
+495930244, Hunger by Knut Hamsun 
+684746760, If on a Winter's Night a Traveller  by Italo Calvino 
+958426647, The Leopard by Giuseppe Tomasi di Lampedusa 
+200368010, The Poems of Robert Frost by Robert Frost 
+706100709, Epic of Gilgamesh by Unknown 
+451744158, PhÃ¨dre by Jean Racine 
+431875465, An American Tragedy by Theodore Dreiser 
+389602779, Time The Picture of Dorian Gray by Oscar Wilde 
+625356483, Women in Love by D. H. Lawrence 
+749803176, Prometheus Bound by Aeschylus 
+967131129, The Complete Poetry and Prose of William Blake by William Blake 
+648357225, Lysistrata by Aristophanes 
+168229020, A Clockwork Orange by Anthony Burgess 
+631438252, Rebecca by Daphne du Maurier 
+991631529, The Call of the Wild by Jack London 
+536585769, Orlando: A Biography by Virginia Woolf  
+235167174, Dracula by Bram Stoker 
+071962897, The Color Purple by Alice Walker 
+014369962, The Stories of John Cheever by John Cheever 
+625617407, Little Women by Louisa May Alcott 
+146956317, Steppenwolf by Hermann Hesse 
+219421307, Eugenie Grandet by HonorÃ© de Balzac 
+651938759, Macbeth by William Shakespeare 
+682680387, Gravity's Rainbow  by Thomas Pynchon 
+051692205, A Tale of Two Cities by Charles Dickens 
+336026982, I Claudius  by Robert Graves 
+401538044, The Unbearable Lightness of Being by Milan Kundera 
+302650516, The Pickwick Papers by Charles Dickens 
+774716993, Tartuffe by MoliÃ¨re 
+064251147, Seven Against Thebes by  Aeschylus 
+240234700, The Persians by Aeschylus 
+448367864, The Suppliants by Aeschylus 
+708664425, Finnegans Wake by James Joyce 
+476546023, Confessions of Zeno by Italo Svevo 
+008957132, De Rerum Natura by Lucretius 
+642811062, Harry Potter And The Philosopher's Stone by J. K. Rowling 
+595774149, Molloy by Samuel Beckett 
+646764443, The Handmaid's Tale by Margaret Atwood 
+983452887, Rabbit at Rest by John Updike 
+653269665, The Golden Notebook by Doris Lessing 
+279940966, Rabbit Is Rich by John Updike 
+989568228, Through the Looking Glass by Lewis Carroll 
+946304591, The Bacchae by Euripides 
+228178790, Rabbit Redux by  John Updike 
+142549854, The Adventures of Augie March by Saul Bellow 
+116347718, Malone Dies by Samuel Beckett 
+037712535, Women of Trachis by Sophocles 
+868147099, Ajax by Sophocles 
+639680525, Philoctetes by Sophocles 
+052766300, Henderson The Rain King by Saul Bellow
+614380508, The Misanthrope by MoliÃ¨re
+578812600, Nineteen Nineteen by John Dos Passos
+165519489, Collected Poems of Dylan Thomas by Dylan Thomas
+103201942, Independent People by Halldor Laxness
+636160846, Complete Poems of Giacomo Leopardi by Giacomo Leopardi
+728993400, Pilgrim's Progress  by John Bunyan
+569298967, The Man Without Qualities by Robert Musil
+932492193, Herzog  by Saul Bellow
+521210861, Nine Stories by J.D. Salinger
+784205982, Jude the Obscure by Thomas Hardy
+324475134, Lady Chatterley's Lover by D. H. Lawrence
+156320564, Pedro Paramo by Juan Rulfo
+777314210, The Maltese Falcon by Dashiell Hammett
+568490563, Howards End by E. M. Forster
+074230713, Stories of Guy de Maupassant by Guy de Maupassant
+605862335, The Good Soldier Svejk by Jaroslav HaÅ¡ek
+540300881, All Quiet on the Western Front by Erich Maria Remarque
+707624147, The Three Musketeers by Alexandre Dumas
+654210761, The 42nd Parallel by John Dos Passos
+813621038, The Big Money by John Dos Passos
+167363836, The Heart Is A Lonely Hunter by Carson McCullers
+634755515, Tender Is the Night by F. Scott Fitzgerald
+655505825, The Sonnets by William Shakespeare
+943298433, Infinite Jest  by David Foster Wallace
+011539662, The Birds by Aristophanes
+894643710, Memoirs of Hadrian by Marguerite Yourcenar
+010314102, Of Mice and Men by John Steinbeck
+191634412, The Corrections by Jonathan Franzen
+439654807, Berlin Alexanderplatz by Alfred DÃ¶blin
+448545558, Austerlitz  by W. G. Sebald 
+807063105, The Red Badge of Courage by Stephen Crane
+778346826, The LionThe Witch and the Wardrobe  by C.S. Lewis
+275504687, Clarissa by Samuel Richardson
+554528623, The Poems of John Keats by John Keats
+204232467, The Rime of the Ancient Mariner by Samuel Taylor Coleridge
+412026469, Love in the Time of Cholera by Gabriel Garcia Marquez
+015869456, The Critique of the School for Wives by MoliÃ¨re
+753884775, Don Juan by MoliÃ¨re
+367644412, The Would-Be Gentleman by MoliÃ¨re
+679414589, The Would-Be Invalid by MoliÃ¨re
+644463641, The School for Wives by MoliÃ¨re
+958186039, The Miser by MoliÃ¨re
+974845315, The Adventures of Oliver Twist by Charles Dickens
+331248737, Song of Solomon by Toni Morrison
+982033889, The Unnamable by Samuel Beckett
+149776655, The Book of Disquiet by Fernando Pessoa
+785204329, Winnie the Pooh by A. A. Milne
+549803945, Le Morte d'Arthur by Thomas Malory
+648483655, If I Forget Thee Jerusalem by William Faulkner 
+912093792, 2666 by Roberto Bolano 
+563916049, Poems of Federico GarcÃ­a Lorca by Federico GarcÃ­a Lorca 
+101065670, A Wrinkle In Time by Madeleine L'Engle 
+123159878, The House of the Spirits by Isabel Allende 
+518067223, Jakob Von Gunten by Robert Walser 
