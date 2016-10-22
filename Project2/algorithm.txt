@@ -1,0 +1,84 @@
+Project 2B: Algorithm
+	Customer Class:
+		Member Variables:
+			- id: int (The ID number given to a customer from customers.txt)
+			- name: string (The First and Last name of a customer from customers.txt)
+			- reviews[] : int (An array of all the reviews of the user values 0 - 5, 0 is the same as no review)
+			- similarity_index[] : int 
+				- This will be an array of the similarities between a user and all other users
+				including themselves. It will be found by treating the reviews[] array as a 
+				mathematical vector and taking the cosine distance between the mathematical
+				vector of this user and all the other users. NOTE: To create a more accurate
+				similarity index we will subtract each user's average review from all of their 
+				reviews before finding cosine similarity, this will make sure we get a curve more
+				indicitive of the average of likeness not just average of score, this should be
+				initialized in the invokation of a Customer. (Also note: it might be better to use
+				c++ vectors instead of arrays, will have to do testing on this first)
+		Member Functions:
+			- Setters and Getters
+			- Recommend_Books()
+				- For a given user, find the greatest cosine similarity between this user and all 
+				other users from the similarity_index[], then using the similarity_index between the
+				books to find the greatest similarity between a book that the user has rated and the
+				user has not rated. (Might have to use a vector-like set to make sure there are no
+				duplicates) Also, we probably only need to find the first 10 highest, but it wouldn't
+				be hard to find all the books and rank them in order, but maybe we should go ten at a
+				time to save overhead. Example: If user A has rated a book a 5, and user B has also
+				rated it a 5 check the highest cosine similarity between that book and another book
+				under the condition User A has NOT rated that book. 
+			- Recalculate():
+				Simply recalculates the similarity index list (only called if there is a change
+				in reviews)
+	Book Class:
+		Member Variables:
+			-isbn: int (isbn from books.txt)
+			-title: String(title from books.txt)
+			-index: int (the books index in our system)
+			-reviews[]: int (An array of all the reviews the users have given the books including
+			zeroes, essentially this is just the column of the index of the book if we put all of 
+			the reviews into one matrix or two dimensional array/vector)
+			-similarity_index[] : int 
+				- Same process as above, we will check the cosine similarity between the two 
+				reviews[] arrays/vectors treated as mathematical vectors. The index of the highest
+				similarity index will be the book most commonly highly (or lowly) rated
+			-average_rating : int
+				- The average rating of the book, take all items in reviews and divide by number of
+				users.
+		Member Functions:
+			-Recalculate():
+				Simply recalculates the similarity index list (only called if there is a change
+				in reviews)
+
+	NOTE: I think we will get better performance if we instead of calculating the similarities
+	each time the user requests book recommendations, we calculate them each time a new book is
+	reviewed. and this way we only have to check one book versus everything else, then the
+	searching through the similarity_index arrays/vectors will just be a simple binary search
+
+	Main:
+
+	User enters ID number:
+		User can search for a book(1):
+			User searches for a book using ISBN or Name and gets the ratings all users have for
+			that book. They can jump to (2) from here if they want to rate it themselves
+
+		User can rate book (2):
+			User finds book by ISBN or Name,(unless already found) we get the book.index of 
+			that book and change the review of that users review list (it will be the books 
+			index in the users reviews list) also change the review in the Books' reviews 
+			list using the users ID as index.
+
+			Once this is done repopulate the similarity indices for the user and for the book
+		User can get book recommendations:
+			If the customer has rated some books:
+				Using the user similarity index find out which user they are closest too in likes:
+					Loop through the similar users' reviews, if the similar user has rated a book
+					a 5, find books similar in ratings to that book, using the books similarity
+					index, then assuming that the original user hasn't rated it, recommend it.
+
+					Go for every book for 5, then 4, etc. But only show ten at a time prompt the
+					user if they would like more
+			If customer has not rated books:
+				Loop through all the books and find which one has highest average rating, recommend 
+				based on this flag
+
+	NOTE: I assume all searching will be done with parallel programming and binary search.
