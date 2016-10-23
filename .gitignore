@@ -245,3 +245,6 @@ ModelManifest.xml
 .fake/
 /Project1/Project1
 /Project1/Project1.sln
+/Project2B/Project2B/Project2B.vcxproj
+/Project2B/Project2B/Project2B.vcxproj.filters
+/Project2B/Project2B.sln
