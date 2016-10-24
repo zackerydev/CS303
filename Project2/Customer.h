@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <math.h>
 #include "Book.h"
 
 using namespace std;
@@ -15,11 +16,47 @@ public:
         user_similarity.assign(10, 0);
     }
     Customer() {}
-    void set_rating(int ISBN, int rating, Book book)
-    {
-        reviews[book.get_index()] = rating;
-    }
 
+    void set_rating(int ISBN, int rating, vector<Book>& books)
+    {
+        for (int i = 0; i < books.size(); i++) // ROOM FOR SPEED INCREASE USING PARALLEL PROGRAMMING AND BINARY SEARCH?
+        {
+            if (books[i].get_isbn() == ISBN)
+            {
+                //cout << ISBN << " " << books[i].get_isbn() << endl;
+                reviews[i] = rating;
+                books[i].set_review(rating, ID);
+                return;
+            }
+        }
+    }
+    void calculate(vector<Customer>& customers)
+    {
+        int total = 0;
+        int count = 0;
+        for (int i = 0; i < reviews.size(); i++)
+        {
+            if (reviews[i] != 0)
+            {
+                total += reviews[i];
+                count++;
+            }
+        }
+        average_score = total / count;
+
+        for (int i = 0; i < reviews.size(); i++)
+        {
+            if (reviews[i] != 0)
+            {
+                reviews[i] -= average_score; // We subtract a user's average score, this will give us sometimes negative numbers but it won't matter
+                // a lower score still means farther apart
+            }
+        }
+        for (int i = 0; i < customers.size(); i++)
+        {
+            user_similarity[i] = calculate_cosine_sim(reviews, customers[i].get_reviews());
+        }
+    }
     void RecommendBooks() {}
 
     int get_id()
@@ -32,7 +69,7 @@ public:
         return name;
     }
 
-    vector<int> get_book_similarity()
+    vector<double> get_user_similarity()
     {
         return user_similarity;
     }
@@ -42,9 +79,18 @@ public:
         return reviews;
     }
 
+    void print_reviews()
+    {
+        for (int i = 0; i < reviews.size(); i++)
+        {
+            cout << reviews[i];
+        }
+        cout << endl;
+    }
 private:
     int ID;
     string name;
+    int average_score;
     vector<int> reviews;
-    vector<int> user_similarity;
+    vector<double> user_similarity;
 };
