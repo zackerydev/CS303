@@ -44,20 +44,33 @@ public:
         }
         average_score = total / count;
 
-        for (int i = 0; i < reviews.size(); i++)
-        {
-            if (reviews[i] != 0)
-            {
-                reviews[i] -= average_score; // We subtract a user's average score, this will give us sometimes negative numbers but it won't matter
-                // a lower score still means farther apart
-            }
-        }
+        //for (int i = 0; i < reviews.size(); i++)
+        //{
+        //    if (reviews[i] != 0)
+        //    {
+        //        reviews[i] -= average_score; // We subtract a user's average score, this will give us sometimes negative numbers but it won't matter
+        //        // a lower score still means farther apart
+        //    }
+        //}
         for (int i = 0; i < customers.size(); i++)
         {
             user_similarity[i] = calculate_cosine_sim(reviews, customers[i].get_reviews());
         }
     }
-    void RecommendBooks() {}
+    void RecommendBooks(vector<Customer>& customers, vector<Book>& books) 
+    {
+        int count = 1;
+        int closest_user = find_max(user_similarity);
+        vector<int> closest_user_reviews = customers[closest_user].get_reviews();
+        for (int i = 0; i < closest_user_reviews.size(); i++)
+        {
+            if (closest_user_reviews[i] == 5 && reviews[i] == 0)
+            {
+                cout << count << ". " << books[i].get_title() << endl;
+                count++;
+            }
+        }
+    }
 
     int get_id()
     {

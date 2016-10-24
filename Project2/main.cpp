@@ -31,6 +31,54 @@ int main()
        books[i].calculate(books);
    }
 
+   while (true)
+   {
+       int user_id, choice;
+       cout << "Please enter user ID number: ";
+       cin >> user_id;
+       while (true)
+       {
+           cout << "Welcome " << customers[user_id].get_name() << " what would you like to do?" << endl;
+           cout << "1. Find and Rate a Book" << endl;
+           cout << "2. Rate a Book" << endl;
+           cout << "3. Get Book Recommendations" << endl;
+           cout << "4. Quit" << endl;
+
+           cin >> choice;
+
+           if (choice == 4)
+           {
+               break;
+           }
+           switch (choice)
+           {
+           case 1:
+               break;
+           case 2:
+               break;
+           case 3:
+               cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
+               customers[user_id].RecommendBooks(customers, books);
+               cout << endl;
+               break;
+           default:
+               cout << "Please enter a valid choice! " << endl;
+           }
+       }
+
+       cout << "Would you like to quit or continue?" << endl;
+       cout << "1. Continue" << endl;
+       cout << "2. Quit" << endl;
+       cin >> choice;
+
+       if (choice == 2)
+           break;
+
+   }
+   
+
+
+
    /*for (int i = 0; i < customers.size(); i++) // For testing output of similarities
    {
        vector<double> book_sims = books[i].get_book_similarity();
@@ -51,6 +99,4 @@ int main()
    cout << endl;
    }*/
 
-
-   system("pause");
 }

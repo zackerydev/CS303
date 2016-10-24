@@ -10,6 +10,7 @@
 using namespace std;
 
 double calculate_cosine_sim(vector<int> v1, vector<int> v2);
+int find_max(vector<double> v1);
 
 class Book
 {
@@ -118,4 +119,19 @@ double calculate_cosine_sim(vector<int> v1, vector<int> v2)
     double output = ((sumxy) / (sqrt(sumxx * sumyy)));
     return output;
 
+}
+
+int find_max(vector<double> v1)
+{
+    double max = 0.0;
+    int return_index;
+    for (int i = 0; i < v1.size(); i++)
+    {
+        if (v1[i] >= max && v1[i] != 1)
+        {
+            return_index = i;
+        }
+    }
+
+    return return_index;
 }
