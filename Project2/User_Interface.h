@@ -20,7 +20,7 @@ public:
 
     vector<Customer> load_customers() {
 
-        fstream fin = fstream(cust_file_path);
+        fstream fin(cust_file_path);
 
         //skip the headings in the files
         string discard;
@@ -45,7 +45,7 @@ public:
     /* Load the books into the vector from the file */
     vector<Book> load_books() {
 
-        fstream fin = fstream(book_file_path);
+        fstream fin(book_file_path);
 
         int index = -1;
 
@@ -71,7 +71,7 @@ public:
     }
     void load_ratings(vector<Customer>& custs, vector<Book>& bks)
     {
-        fstream fin = fstream(rating_file_path);
+        fstream fin(rating_file_path); //fstream fin = fstream(rating_file_path);
         int index = -1;
 
         string discard;
