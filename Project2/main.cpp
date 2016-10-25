@@ -11,10 +11,10 @@ using namespace std;
 
 int main()
 {
-
-   User_Interface UI = User_Interface("C:/Users/Zack/Desktop/C++/CS303_1/Project2/customers.txt",
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/books.txt", 
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/ratings.txt");
+   //Input locations of customers.txt, book.txt, and ratings.txt in User_Interface function, in that order(customers, books, ratings)
+   User_Interface UI = User_Interface("customers.txt",
+                                      "books.txt", 
+                                      "ratings.txt");
 
    vector<Customer> customers = UI.load_customers();
    vector<Book> books = UI.load_books();
