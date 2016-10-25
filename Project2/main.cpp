@@ -1,25 +1,25 @@
-#include <iostream>
-#include <string>
-#include <vector>
 #include "Book.h"
 #include "Customer.h"
 #include "User_Interface.h"
+#include <iostream>
+#include <string>
+#include <vector>
 #include <fstream>
 
 using namespace std;
 
-
 int main()
 {
 
-   User_Interface UI = User_Interface("C:/Users/Zack/Desktop/C++/CS303_1/Project2/customers.txt",
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/books.txt", 
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/ratings.txt");
+   User_Interface UI = User_Interface("customers.txt",
+                                      "books.txt", 
+                                      "ratings.txt");
 
    vector<Customer> customers = UI.load_customers();
    vector<Book> books = UI.load_books();
    UI.load_ratings(customers, books);
 
+   //Put inside another function
    for (int i = 0; i < customers.size(); i++)
    {
        customers[i].calculate(customers);
@@ -30,19 +30,20 @@ int main()
        books[i].calculate(books);
    }
 
-   while (true)
+   while (true) 
    {
        int user_id, choice;
-       cout << "Please enter user ID number: ";
+       cout << "Please log in with your User ID: ";
        cin >> user_id;
        while (true)
        {
-           cout << "Welcome " << customers[user_id].get_name() << " what would you like to do?" << endl;
+           cout << endl << "Welcome User " << /*customers[user_id].get_name() <<*/ endl << endl;
            cout << "1. Find and Rate a Book" << endl;
            cout << "2. Rate a Book" << endl;
            cout << "3. Get Book Recommendations" << endl;
-           cout << "4. Quit" << endl;
-
+           cout << "4. Log Out" << endl << endl;
+           cout << "Please pick an option: ";
+         
            cin >> choice;
 
            if (choice == 4)
@@ -56,8 +57,8 @@ int main()
            case 2:
                break;
            case 3:
-               cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
-               customers[user_id].RecommendBooks(customers, books);
+               cout << "Recommended Books for: "/* << customers[user_id].get_name()*/ << endl;
+               //customers[user_id].RecommendBooks(customers, books);
                cout << endl;
                break;
            default:
@@ -65,9 +66,9 @@ int main()
            }
        }
 
-       cout << "Would you like to quit or continue?" << endl;
+       cout << "Would you like to stop the program?" << endl;
        cout << "1. Continue" << endl;
-       cout << "2. Quit" << endl;
+       cout << "2. Shut Down" << endl;
        cin >> choice;
 
        if (choice == 2)
