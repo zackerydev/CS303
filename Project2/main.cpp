@@ -1,13 +1,12 @@
-#include <iostream>
-#include <string>
-#include <vector>
 #include "Book.h"
 #include "Customer.h"
 #include "User_Interface.h"
+#include <iostream>
+#include <string>
+#include <vector>
 #include <fstream>
 
 using namespace std;
-
 
 int main()
 {
@@ -33,17 +32,21 @@ int main()
    while (true)
    {
        int user_id, choice;
-       cout << "Please enter user ID number: ";
+       cout << "Please log in with your ID number: ";
        cin >> user_id;
+       cout << endl;
+       cout << "Welcome " << customers[user_id].get_name() << endl << endl;
+      
        while (true)
        {
-           cout << "Welcome " << customers[user_id].get_name() << " what would you like to do?" << endl;
            cout << "1. Find and Rate a Book" << endl;
            cout << "2. Rate a Book" << endl;
            cout << "3. Get Book Recommendations" << endl;
            cout << "4. Quit" << endl;
+           cout << "Please pick an option: ";
 
            cin >> choice;
+           cout << endl;
 
            if (choice == 4)
            {
@@ -65,7 +68,7 @@ int main()
            }
        }
 
-       cout << "Would you like to quit or continue?" << endl;
+       cout << "Would you like to sign out or continue?" << endl;
        cout << "1. Continue" << endl;
        cout << "2. Quit" << endl;
        cin >> choice;
