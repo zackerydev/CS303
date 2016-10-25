@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector> // We have to include customer for the cosine similarity function
+#include <cmath> //Include sqrt function
 
 using namespace std;
 
