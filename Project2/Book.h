@@ -7,6 +7,7 @@
 #include <string>
 #include <vector> // We have to include customer for the cosine similarity function
 #include <cmath> //Include sqrt function
+#include <algorithm>
 
 using namespace std;
 
@@ -56,6 +57,8 @@ public:
         {   // NOTE: We will get 1 for the similarity between this book and itself, we will need to discard it when finding maximum
             book_similarity[i] = calculate_cosine_sim(reviews, books[i].get_reviews());
         }
+
+        closest_book = find_max(book_similarity);
     } // This function will calculate all the similarity and average data, called when processing is done
 
     void set_review(int rating, int id)
@@ -104,12 +107,18 @@ public:
         }
         cout << endl;
     }
+
+    int get_closest_book()
+    {
+        return closest_book;
+    }
 private:
     int ISBN;
     string title;
     int index; // The line number - 1 the book is in books.txt This helps with our indices. So book index 0 is Ulysses
     vector<int> reviews; // Vector of all reviews, Indices in this vector correspond to users
     vector<double> book_similarity; // Vector of cosine similarities between all books. Indices in this vector correspond to book indices
+    int closest_book;
     int average_rating; // Average rating, will be subtracted from reviews vector before calculating cosine similarity index
 
 
@@ -138,14 +147,40 @@ double calculate_cosine_sim(vector<int> v1, vector<int> v2)
 int find_max(vector<double> v1)
 {
     double max = 0.0;
-    int return_index;
+    int return_index = -1;
     for (int i = 0; i < v1.size(); i++)
     {
-        if (v1[i] >= max && v1[i] != 1)
+        if (v1[i] > max && v1[i] != 1)
         {
             return_index = i;
+            max = v1[i];
         }
     }
 
     return return_index;
+}
+
+// This function will return a vector of three items that are the indices of the top three items
+void find_n_greatest(vector<double> v1, vector<int>& maximums, size_t n)
+{
+    if (maximums.size() == n)
+    {
+        return;
+    }
+    int index = -1; // The maximum low we can get from cosine disparity
+    int max = -1;
+    for (int i = 0; i < v1.size(); i++)
+    {
+        if (v1[i] > max)
+        {
+                max = v1[i];
+                index = i;
+
+        }         
+    }
+    v1[index] = -1;
+    maximums.push_back(index);
+    find_n_greatest(v1, maximums, n);
+
+
 }

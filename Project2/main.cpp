@@ -23,26 +23,28 @@ int main()
 
    //Input locations of customers.txt, book.txt, and ratings.txt in User_Interface function, in that order(customers, books, ratings)
     // We use the User_Interface class to read in data, it might be better to rename it to "Parser" or something more appropriate
-   User_Interface UI = User_Interface("C:/Users/Zack/Desktop/C++/CS303_1/Project2/customers.txt",
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/books.txt", 
-                                      "C:/Users/Zack/Desktop/C++/CS303_1/Project2/ratings.txt");
+   User_Interface UI = User_Interface("customers.txt",
+                                      "books.txt", 
+                                      "ratings.txt");
 
    vector<Customer> customers = UI.load_customers(); // Load the customers in from the UI
    vector<Book> books = UI.load_books(); // Load the Books in from the UI
    UI.load_ratings(customers, books); // Load the ratings in from the UI
 
    // Iterate through the list of books and customers, calculate the cosine sim and everything else needed for each item
-
-   for (int i = 0; i < customers.size(); i++)
-   {
-       customers[i].calculate(customers);
-   }
-   
    for (int i = 0; i < books.size(); i++)
    {
        books[i].calculate(books);
    }
 
+
+
+   for (int i = 0; i < customers.size(); i++)
+   {
+       customers[i].calculate(customers, books);
+   }
+   
+   
    while (true)
    {
        int user_id, choice;
@@ -74,7 +76,7 @@ int main()
                break;
            case 3:
                cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
-               customers[user_id].RecommendBooks(customers, books);
+               customers[user_id].RecommendBooks(books);
                cout << endl;
                break;
            default:
