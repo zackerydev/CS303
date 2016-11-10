@@ -57,7 +57,9 @@ class String_Tokenizer{
 
 		/** Get rid of the whitespace around a token */
 		string trim(const string& token){
-			return token.substr(token.find_first_not_of(' '));
+			int str_begin = token.find_first_not_of(' ');
+			int str_end = token.find_last_not_of(' ');
+			return token.substr(str_begin, str_end-str_begin+1);
 		}
 		/** The string to be split into tokens */
 		string the_source;

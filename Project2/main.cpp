@@ -44,7 +44,7 @@ int main()
    {
        customers[i].calculate(customers, books);
    }
-   
+
    UI.create_title_bst();
    UI.create_isbn_bst();
 

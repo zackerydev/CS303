@@ -1,5 +1,6 @@
 #ifndef USER_INTERFACE_H
 #define USER_INTERFACE_H
+#include <iostream>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -79,17 +80,20 @@ public:
 			cout << "Find a book by:\n1.Title\n2.ISBN\n3.Go back" << endl;
 			cin >> search_choice;
 
+			//Need to flush the stream after using cin
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 			switch (search_choice)
 			{
 			case 1:
 				cout << "Enter the title: ";
-				cin >> input;
+				getline(cin, input);
 				returned_item = title_tree.find(input);
 				cout << *returned_item << endl;
 				break;
 			case 2:
 				cout << "Enter the isbn: ";
-				cin >> input;
+				getline(cin, input);
 				returned_item = isbn_tree.find(input);
 				cout << *returned_item << endl;
 				break;
