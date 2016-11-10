@@ -122,17 +122,11 @@ protected:
 
 private:
 
-
 	std::string pre_order(const BTNode<Item_Type>* local_root) const;
-
-
 
 	std::string post_order(const BTNode<Item_Type>* local_root) const;
 
 	std::string in_order(const BTNode<Item_Type>* local_root) const;
-
-
-
 
 };  // End Binary_Tree
 
@@ -154,6 +148,7 @@ BTNode<Item_Type>* Binary_Tree<Item_Type>::getRoot(){
 
 	return root;
 }
+//Overload comparisons for Book isbns and titles?
 
 // Overloading the ostream insertion operator.
 template<typename Item_Type>

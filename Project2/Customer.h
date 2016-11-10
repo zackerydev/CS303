@@ -18,7 +18,7 @@ public:
     }
     Customer() {}
 
-    void set_rating(int ISBN, int rating, vector<Book>& books)
+    void set_rating(string ISBN, int rating, vector<Book>& books)
     {
         // We search for the given ISBN and set the rating of that book to be the rating given.
         // We could speed this up a bunch by using a sorted red-black binary tree that is sorted by
@@ -84,7 +84,6 @@ public:
                     count++;
                 }
             }
-
         }
 
 
@@ -134,6 +133,7 @@ public:
         }
         cout << endl;
     }
+	
 private:
     int ID;
     string name;

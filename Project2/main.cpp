@@ -16,7 +16,7 @@ int main()
     
     1) Adding in Parallel programming wherever applicable to speed up computation time and improve performance
         This would be adding in parallel code to parts where we search or whatnot to improve the time
-     2) Using Binary Search Trees (Red-Black self balancing) to create a BST of books by index and BST of books by title
+    2) Using Binary Search Trees (Red-Black self balancing) to create a BST of books by index and BST of books by title
         So when users select options that aren't recommend books the time for searching and returning is better (Olg(n)) */
 
 
@@ -31,6 +31,7 @@ int main()
    vector<Book> books = UI.load_books(); // Load the Books in from the UI
    UI.load_ratings(customers, books); // Load the ratings in from the UI
 
+
    // Iterate through the list of books and customers, calculate the cosine sim and everything else needed for each item
    for (int i = 0; i < books.size(); i++)
    {
@@ -44,55 +45,10 @@ int main()
        customers[i].calculate(customers, books);
    }
    
-   
-   while (true)
-   {
-       int user_id, choice;
-       cout << "Please log in with your ID number: ";
-       cin >> user_id;
-       cout << endl;
-       cout << "Welcome " << customers[user_id].get_name() << endl << endl;
-      
-       while (true)
-       {
-           cout << "1. Find and Rate a Book" << endl;
-           cout << "2. Rate a Book" << endl;
-           cout << "3. Get Book Recommendations" << endl;
-           cout << "4. Quit" << endl;
-           cout << "Please pick an option: ";
+   UI.create_title_bst();
+   UI.create_isbn_bst();
 
-           cin >> choice;
-           cout << endl;
-
-           if (choice == 4)
-           {
-               break;
-           }
-           switch (choice)
-           {
-           case 1:
-               break;
-           case 2:
-               break;
-           case 3:
-               cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
-               customers[user_id].RecommendBooks(books);
-               cout << endl;
-               break;
-           default:
-               cout << "Please enter a valid choice! " << endl;
-           }
-       }
-
-       cout << "Would you like to sign out or continue?" << endl;
-       cout << "1. Continue" << endl;
-       cout << "2. Quit" << endl;
-       cin >> choice;
-
-       if (choice == 2)
-           break;
-
-   }
+   UI.run_ui(); //I made the main program a function of ui; it's the same code as before
    
 
 

@@ -18,6 +18,92 @@ public:
 
 	};
 
+	void run_ui(){
+		while (true) {
+		   int user_id, choice;
+		   cout << "Please log in with your ID number: ";
+		   cin >> user_id;
+		   cout << endl;
+		   cout << "Welcome " << customers[user_id].get_name() << endl << endl;
+      
+		   while (true) {
+			   cout << "1. Find and Rate a Book" << endl;
+			   cout << "2. Rate a Book" << endl; //Return only books not rated
+			   cout << "3. Get Book Recommendations" << endl;
+			   cout << "4. Quit" << endl;
+			   cout << "Please pick an option: ";
+
+			   cin >> choice;
+			   cout << endl;
+
+			   if (choice == 4)
+			   {
+				   break;
+			   }
+			   switch (choice)
+			   {
+				   case 1:
+					   choice_1(user_id);
+					   cout <<endl;
+					   break;
+				   case 2:
+					   break;
+				   case 3:
+					   cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
+					   customers[user_id].RecommendBooks(books);
+					   cout << endl;
+					   break;
+				   default:
+					   cout << "Please enter a valid choice! " << endl;
+			   }
+		   }
+
+		   cout << "Would you like to sign out or continue?" << endl;
+		   cout << "1. Continue" << endl;
+		   cout << "2. Quit" << endl;
+		   cin >> choice;
+
+		   if (choice == 2)
+			   break;
+
+		}
+	};
+	//Runs the ui for option 1
+	void choice_1(int cust_id){
+		bool using_choice_1 = true;
+		do
+		{
+			string input; 
+			const string* returned_item;
+			int search_choice;
+			cout << "Find a book by:\n1.Title\n2.ISBN\n3.Go back" << endl;
+			cin >> search_choice;
+
+			switch (search_choice)
+			{
+			case 1:
+				cout << "Enter the title: ";
+				cin >> input;
+				returned_item = title_tree.find(input);
+				cout << *returned_item << endl;
+				break;
+			case 2:
+				cout << "Enter the isbn: ";
+				cin >> input;
+				returned_item = isbn_tree.find(input);
+				cout << *returned_item << endl;
+				break;
+			case 3:
+				using_choice_1 = false;
+				break;
+			default:
+				cout << "Please enter a valid choice! " << endl;
+				break;
+			}
+
+		} while (using_choice_1);
+	}
+	
     vector<Customer> load_customers() {
 
         fstream fin(cust_file_path);
@@ -59,8 +145,9 @@ public:
             getline(fin, line);
             String_Tokenizer st = String_Tokenizer(line, ",");
 
-            int isbn = stoi(st.next_token());
-            string title = st.next_token();
+            //int isbn = stoi(st.next_token());
+			string isbn = st.next_token();
+			string title = st.next_token();
 
             Book book = Book(isbn, title, ++index);
             books.push_back(book);
@@ -84,13 +171,26 @@ public:
             String_Tokenizer st = String_Tokenizer(line, ",");
             int id = stoi(st.next_token());
             int rating = stoi(st.next_token());
-            int isbn = stoi(st.next_token());
+            //int isbn = stoi(st.next_token());
+			string isbn = st.next_token();
             //cout << id << " " << rating << " " << isbn << endl;
             custs[id].set_rating(isbn, rating, bks);
 
         }
         fin.close();
     }
+	void create_title_bst(){
+		for (int i = 0; i < books.size(); i++)
+		{
+			title_tree.insert(books[i].get_title());
+		}
+	}
+	void create_isbn_bst(){
+		for (int i = 0; i < books.size(); i++)
+		{
+			isbn_tree.insert(books[i].get_isbn());
+		}
+	}
 private:
 
 	/** Store the filepaths of the three files */
@@ -102,8 +202,8 @@ private:
 	vector<Customer> customers;
 	vector<Book> books;
 
-	/** Load customers into the vector from the file */
-	
+	Binary_Search_Tree<string> title_tree;
+	Binary_Search_Tree<string> isbn_tree;
 
 };
 
