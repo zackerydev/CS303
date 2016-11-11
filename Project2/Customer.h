@@ -89,11 +89,17 @@ public:
 
 
     }
-    void RecommendBooks(vector<Book>& books) // Acts as the wrapper function for the inorder traversal TraverseBooks()
+    bool RecommendBooks(vector<Book>& books) // Acts as the wrapper function for the inorder traversal TraverseBooks()
     {
+        if (Recommended_Books.getRoot() == NULL)
+        {
+            return false;
+        }
         BTNode<int>* root = Recommended_Books.getRoot();
         int count = 1;
         TraverseBooks(books, root, count);
+        return true;
+        
     }
 
     void TraverseBooks(vector<Book>& books, BTNode<int>* root, int& count)

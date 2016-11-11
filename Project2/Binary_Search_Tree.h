@@ -12,7 +12,7 @@ public:
 	Binary_Search_Tree() : Binary_Tree<Item_Type>() {}
 
 	// Public Member Functions
-	virtual bool insert(const Item_Type& item);
+	virtual bool insert(Item_Type& item);
 
 	virtual bool erase(const Item_Type& item);
 
@@ -25,11 +25,65 @@ public:
 	const Item_Type* max(BTNode<Item_Type>* local_root) const;
 
 	const Item_Type* find(const Item_Type& target) const;
+
+    template <typename Item_Type>
+    void startsWith(BTNode<Book>* local_root, const Item_Type& target, vector<Book>& matches) const {
+
+        if (local_root == NULL)
+            return;
+
+        if (target == local_root->data.get_title().substr(0, target.length())) {
+            matches.push_back(local_root->data);
+            startsWith(local_root->left, target, matches);
+            startsWith(local_root->right, target, matches);
+        }
+
+        else if (target < local_root->data.get_title())
+            return startsWith(local_root->left, target, matches);
+
+        else if (local_root->data.get_title() < target)
+            return startsWith(local_root->right, target, matches);
+
+    }
+
+    template <typename Item_Type>
+    const vector<Book> startsWith(const Item_Type& target) const {
+
+        vector<Book> matches;
+        startsWith(root, target, matches);
+        return matches;
+    }
+
+    template <typename Item_Type>
+    void startsWith_isbn(BTNode<Book>* local_root, const Item_Type& target, vector<Book>& matches) const {
+
+        if (local_root == NULL)
+            return;
+
+        if (target == local_root->data.get_isbn().substr(0, target.length())) {
+            matches.push_back(local_root->data);
+        }
+
+        startsWith_isbn(local_root->left, target, matches);
+        startsWith_isbn(local_root->right, target, matches);
+
+    }
+
+    template <typename Item_Type>
+    const vector<Book> startsWith_isbn(const Item_Type& target) const {
+
+        vector<Book> matches;
+        startsWith_isbn(root, target, matches);
+        return matches;
+    }
+
+
+
 private:
 
 	// Private Member Functions
 	virtual bool insert(BTNode<Item_Type>*& local_root,
-		const Item_Type& item);
+		 Item_Type& item);
 
 	virtual bool erase(BTNode<Item_Type>*& local_root,
 		const Item_Type& item);
@@ -96,14 +150,14 @@ const Item_Type* Binary_Search_Tree<Item_Type>::find(BTNode<Item_Type>* local_ro
 }
 
 template<typename Item_Type>
-bool Binary_Search_Tree<Item_Type>::insert(const Item_Type& item) {
+bool Binary_Search_Tree<Item_Type>::insert(Item_Type& item) {
 		return insert(this->root, item);
 }
 
 
 
 template<typename Item_Type>
-bool Binary_Search_Tree<Item_Type>::insert(BTNode<Item_Type>*& local_root,const Item_Type& item) {
+bool Binary_Search_Tree<Item_Type>::insert(BTNode<Item_Type>*& local_root, Item_Type& item) {
 		if (local_root == NULL) {
 			local_root = new BTNode<Item_Type>(item);
 			return true;

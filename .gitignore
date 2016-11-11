@@ -256,3 +256,6 @@ ModelManifest.xml
 /Project2/Project2/Project2.vcxproj.filters
 /Project2/Project2/quick_sort.h
 /Project2/Project2/Book_BST.h
+*.vcxproj
+/Project3/Project3/Project3.vcxproj.filters
+/Project3/Project3.sln

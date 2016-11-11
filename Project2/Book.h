@@ -87,7 +87,7 @@ public:
         return index;
     }
 
-    string get_title()
+    string const get_title()
     // Simply returns title
     {
         return title;
@@ -113,6 +113,23 @@ public:
         return closest_book;
     }
 
+    bool operator<(const Book& b1) const
+    {
+        return title < b1.title;
+    }
+
+    int get_average_rating()
+    {
+        return average_rating;
+    }
+
+    void set_average_rating(int n)
+    {
+        //NOTE THIS SHOULD NEVER BE USED BY ANYTHING OTHER THAN THE DUMMY BOOK
+        n = average_rating;
+    }
+
+    friend ostream& operator<<(ostream& os, const Book& b1);
 
 private:
     string ISBN;
@@ -185,4 +202,34 @@ void find_n_greatest(vector<double> v1, vector<int>& maximums, size_t n)
     find_n_greatest(v1, maximums, n);
 
 
+}
+
+ostream& operator<<(ostream& os, const Book& b1)
+{
+    os << b1.title << endl;
+    return os;
+}
+
+void recommend_all(vector<Book> books)
+{
+    int count = 0;
+    while (count < 25)
+    {
+        Book empty;
+        empty.set_average_rating(0);
+        int index;
+        Book max = books[0];
+        for (int i = 0; i < books.size(); i++)
+        {
+            if (books[i].get_average_rating() > max.get_average_rating())
+            {
+                max = books[i];
+                index = i;
+            }
+        }
+        cout << count + 1 << ". " << max.get_title() << endl;
+        books[index] = empty;
+        count++;
+        
+    }
 }

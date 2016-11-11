@@ -20,54 +20,7 @@ public:
 	};
 
 	void run_ui(){
-		while (true) {
-		   int user_id, choice;
-		   cout << "Please log in with your ID number: ";
-		   cin >> user_id;
-		   cout << endl;
-		   cout << "Welcome " << customers[user_id].get_name() << endl << endl;
-      
-		   while (true) {
-			   cout << "1. Find and Rate a Book" << endl;
-			   cout << "2. Rate a Book" << endl; //Return only books not rated
-			   cout << "3. Get Book Recommendations" << endl;
-			   cout << "4. Quit" << endl;
-			   cout << "Please pick an option: ";
-
-			   cin >> choice;
-			   cout << endl;
-
-			   if (choice == 4)
-			   {
-				   break;
-			   }
-			   switch (choice)
-			   {
-				   case 1:
-					   choice_1(user_id);
-					   cout <<endl;
-					   break;
-				   case 2:
-					   break;
-				   case 3:
-					   cout << "Recommended Books for: " << customers[user_id].get_name() << endl;
-					   customers[user_id].RecommendBooks(books);
-					   cout << endl;
-					   break;
-				   default:
-					   cout << "Please enter a valid choice! " << endl;
-			   }
-		   }
-
-		   cout << "Would you like to sign out or continue?" << endl;
-		   cout << "1. Continue" << endl;
-		   cout << "2. Quit" << endl;
-		   cin >> choice;
-
-		   if (choice == 2)
-			   break;
-
-		}
+		
 	};
 	//Runs the ui for option 1
 	void choice_1(int cust_id){
@@ -183,7 +136,7 @@ public:
         }
         fin.close();
     }
-	void create_title_bst(){
+	/*void create_title_bst(){
 		for (int i = 0; i < books.size(); i++)
 		{
 			title_tree.insert(books[i].get_title());
@@ -194,7 +147,7 @@ public:
 		{
 			isbn_tree.insert(books[i].get_isbn());
 		}
-	}
+	} */
 private:
 
 	/** Store the filepaths of the three files */
