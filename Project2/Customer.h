@@ -5,6 +5,7 @@
 #include <math.h>
 #include "Book.h"
 #include "Binary_Search_Tree.h"
+#include "omp.h"
 
 using namespace std;
 
@@ -21,8 +22,6 @@ public:
     void set_rating(string ISBN, int rating, vector<Book>& books)
     {
         // We search for the given ISBN and set the rating of that book to be the rating given.
-        // We could speed this up a bunch by using a sorted red-black binary tree that is sorted by
-        // ISBN
         for (int i = 0; i < books.size(); i++)
         {
             if (books[i].get_isbn() == ISBN)
@@ -49,14 +48,6 @@ public:
         }
         average_score = total / count;
 
-        //for (int i = 0; i < reviews.size(); i++)
-        //{
-        //    if (reviews[i] != 0)
-        //    {
-        //        reviews[i] -= average_score; // We subtract a user's average score, this will give us sometimes negative numbers but it won't matter
-        //        // a lower score still means farther apart
-        //    }
-        //}
         for (int i = 0; i < customers.size(); i++)
         {
             user_similarity[i] = calculate_cosine_sim(reviews, customers[i].get_reviews());

@@ -46,8 +46,11 @@ int main()
 
 
    // Iterate through the list of books and customers, calculate the cosine sim and everything else needed for each item
-   
    Calculate(customers, books);
+
+   omp_set_num_threads(5); 
+   #pragma omp parallel for
+
    for (int i = 0; i < books.size(); i++)
    {
        book_bst.insert(books[i]);
@@ -136,7 +139,7 @@ int main()
                       cout << "Enter rating between 1 and 5 for " << found_books[rate_choice].get_title()  << endl;
                       cin >> rating;
                    }
-                   if(rating )
+                   
                    if (rating == -1)
                        break;
                    cout << "Setting " << customers[user_id].get_name() << "'s rating for " << found_books[rate_choice].get_title()
@@ -182,34 +185,12 @@ int main()
 
    }
 
-
-
-
-   /*for (int i = 0; i < customers.size(); i++) // For testing output of similarities
-   {
-       vector<double> book_sims = books[i].get_book_similarity();
-       for (int j = 0; j < book_sims.size(); j++)
-       {
-           cout << book_sims[j] << " ";
-       }
-       cout << endl;
-   }*/
-
-   /*for (int i = 0; i < customers.size(); i++) // For testing output of similarities
-   {
-   vector<double> user_sims = customers[i].get_user_similarity();
-   for (int j = 0; j < user_sims.size(); j++)
-   {
-   cout << user_sims[j] << " ";
-   }
-   cout << endl;
-   }*/
-
 }
 
 
 void Calculate(vector<Customer>& customers, vector<Book>& books)
 {
+	omp_set_num_threads(5); 
     #pragma omp parallel for
     for (int i = 0; i < books.size(); i++)
     {

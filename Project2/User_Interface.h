@@ -7,6 +7,7 @@
 #include <sstream>
 #include "String_Tokenizer.h"
 #include "Customer.h"
+#include "omp.h"
 
 using namespace std;
 
@@ -136,18 +137,7 @@ public:
         }
         fin.close();
     }
-	/*void create_title_bst(){
-		for (int i = 0; i < books.size(); i++)
-		{
-			title_tree.insert(books[i].get_title());
-		}
-	}
-	void create_isbn_bst(){
-		for (int i = 0; i < books.size(); i++)
-		{
-			isbn_tree.insert(books[i].get_isbn());
-		}
-	} */
+	
 private:
 
 	/** Store the filepaths of the three files */
