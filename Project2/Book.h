@@ -186,11 +186,11 @@ void find_n_greatest(vector<double> v1, vector<int>& maximums, size_t n)
     {
         return;
     }
-    int index = -1; // The maximum low we can get from cosine disparity
+    int index = 0; // The maximum low we can get from cosine disparity
     int max = -1;
     for (int i = 0; i < v1.size(); i++)
     {
-        if (v1[i] > max)
+        if (v1[i] > max && v1[i] != 1)
         {
                 max = v1[i];
                 index = i;
@@ -209,27 +209,44 @@ ostream& operator<<(ostream& os, const Book& b1)
     os << b1.title << endl;
     return os;
 }
+void find_n_greatest_books(vector<Book> v1, vector<Book>& maximums, size_t n)
+{
+    if (maximums.size() == n)
+    {
+        return;
+    }
+    int index = 0; // The maximum low we can get from cosine disparity
+    Book max;
+    max.set_average_rating(0);
+    Book empty;
+    empty.set_average_rating(0);
+    for (int i = 0; i < v1.size(); i++)
+    {
+        if (v1[i].get_average_rating() > max.get_average_rating())
+        {
+            max = v1[i];
+            index = i;
+
+        }
+    }
+    v1[index] = empty;
+    maximums.push_back(max);
+
+    find_n_greatest_books(v1, maximums, n);
+
+
+}
+
 
 void recommend_all(vector<Book> books)
 {
     int count = 0;
-    while (count < 25)
+    int index = 0;
+    vector<Book> greatest_books;
+    find_n_greatest_books(books, greatest_books, 10);
+    for (int i = 0; i < greatest_books.size(); i++)
     {
-        Book empty;
-        empty.set_average_rating(0);
-        int index;
-        Book max = books[0];
-        for (int i = 0; i < books.size(); i++)
-        {
-            if (books[i].get_average_rating() > max.get_average_rating())
-            {
-                max = books[i];
-                index = i;
-            }
-        }
-        cout << count + 1 << ". " << max.get_title() << endl;
-        books[index] = empty;
-        count++;
-        
+        cout << i+1 << ". " << greatest_books[i].get_title() << endl;
     }
 }
+

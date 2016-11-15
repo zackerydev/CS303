@@ -1,0 +1,88 @@
+﻿customer ID, rating (out of 5), book ID
+0, 5, 054133566
+0, 5, 729484098
+0, 4, 079548236
+1, 5, 054133566
+1, 5, 729484098
+1, 5, 675329959
+2, 5, 675329959
+
+log in with your ID number: 0
+
+Welcome John Smith
+
+1. Find and Rate a Book
+2. Get Book Recommendations
+3. Sign Out
+Please pick an option: 2
+
+Recommended Books for: John Smith
+1. The Unnamable by Samuel Beckett
+2. Winnie the Pooh by A. A. Milne
+3. If I Forget Thee Jerusalem by William Faulkner
+
+Would you like to sign out?
+1. Yes
+2. No (default)
+1
+Would you like to quit?
+1. Yes
+2. No (default)
+2
+Please log in with your ID number: 3
+
+Welcome Jose Hernandez
+
+1. Find and Rate a Book
+2. Get Book Recommendations
+3. Sign Out
+Please pick an option: 2
+
+Recommended Books for: Jose Hernandez
+1. The Miser by Moli├â┬¿re
+2. The Adventures of Oliver Twist by Charles Dickens
+3. Song of Solomon by Toni Morrison
+4. Winnie the Pooh by A. A. Milne
+5. Le Morte d'Arthur by Thomas Malory
+6. If I Forget Thee Jerusalem by William Faulkner
+7. 2666 by Roberto Bolano
+8. Poems of Federico Garc├â┬¡a Lorca by Federico Garc├â┬¡a Lorca
+9. A Wrinkle In Time by Madeleine L'Engle
+10. The House of the Spirits by Isabel Allende
+
+Would you like to sign out?
+1. Yes
+2. No (default)
+2
+1. Find and Rate a Book
+2. Get Book Recommendations
+3. Sign Out
+Please pick an option: 3
+
+Would you like to sign out?
+1. Yes
+2. No (default)
+1
+Would you like to quit?
+1. Yes
+2. No (default)
+2
+Please log in with your ID number: 5
+
+Welcome Kim Lauesen
+
+1. Find and Rate a Book
+2. Get Book Recommendations
+3. Sign Out
+Please pick an option: 2
+
+Recommended Books for: Kim Lauesen
+1. The Adventures of Oliver Twist by Charles Dickens
+2. Song of Solomon by Toni Morrison
+3. The Book of Disquiet by Fernando Pessoa
+4. Le Morte d'Arthur by Thomas Malory
+5. Poems of Federico Garc├â┬¡a Lorca by Federico Garc├â┬¡a Lorca
+
+Would you like to sign out?
+1. Yes
+2. No (default)

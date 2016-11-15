@@ -36,8 +36,8 @@ int main()
    //Input locations of customers.txt, book.txt, and ratings.txt in User_Interface function, in that order(customers, books, ratings)
     // We use the User_Interface class to read in data, it might be better to rename it to "Parser" or something more appropriate
    User_Interface UI = User_Interface("customers.txt",
-                                      "books.txt", 
-                                      "ratings.txt");
+       "books.txt",
+       "ratings.txt");
 
    vector<Customer> customers = UI.load_customers(); // Load the customers in from the UI
    vector<Book> books = UI.load_books(); // Load the Books in from the UI
@@ -155,6 +155,7 @@ int main()
                recs = customers[user_id].RecommendBooks(books);
                if (!recs) // Recommends books if the user has no books
                {
+                   cout << "No reviews found, recommending based on all user reviews" << endl;
                    recommend_all(books);
                }
                cout << endl;

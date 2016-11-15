@@ -14,8 +14,8 @@ class Customer
 public:
     Customer(int a_id, string a_name) : ID(a_id),name(a_name)
     {
-        reviews.assign(251, 0); // Fill the vector with 0s to make changing items at indices easier
-        user_similarity.assign(10, 0); // Same as above
+        reviews.assign(251, 0); // Fill the vector with 0s to make changing items at indices easier CHANGE FOR PRES 251
+        user_similarity.assign(10, 0); // Same as above 10
     }
     Customer() {}
 
@@ -36,43 +36,37 @@ public:
     void calculate(vector<Customer>& customers, vector<Book>& books)
     {
         // Exact same as the book.h calculate but we are passing in the customers vector
-        int total = 0;
-        int count = 0;
-        for (int i = 0; i < reviews.size(); i++)
-        {
-            if (reviews[i] != 0)
-            {
-                total += reviews[i];
-                count++;
-            }
-        }
-        average_score = total / count;
-
+        
         for (int i = 0; i < customers.size(); i++)
         {
             user_similarity[i] = calculate_cosine_sim(reviews, customers[i].get_reviews());
         }
 
         find_n_greatest(user_similarity, most_similar_users, 3);
-
         // This is where I will do some improvement to do the algorithm better, I will need to user average rating and max/mins
-        count = 1;
+        int count = 1;
         for (int i = 0; i < 3; i++)
         {
             vector<int> closest_user_reviews = customers[most_similar_users[i]].get_reviews();
             for (int j = 0; j < reviews.size(); j++)
             {
-                if (closest_user_reviews[j] == 5 && reviews[j] == 5)
+                if ((closest_user_reviews[j] == 4 || closest_user_reviews[j] == 5) && (reviews[j] == 5 || reviews[j] == 4))
                 {
                     if (books[j].get_closest_book() == -1)
                     {
                         continue;
                     }
-                    
-                    int closest_book = find_max(books[j].get_book_similarity());
+                    vector<int> closest_book_indices;
+                    find_n_greatest(books[j].get_book_similarity(), closest_book_indices, 10); //change for pres
 
-                    Recommended_Books.insert(closest_book);
-                    count++;
+                    for (int k = 0; k < closest_book_indices.size(); k++)
+                    {
+                        if (reviews[closest_book_indices[k]] == 0)
+                        {
+                            Recommended_Books.insert(closest_book_indices[k]);
+                            count++;
+                        }
+                    }
                 }
             }
         }
@@ -134,7 +128,6 @@ public:
 private:
     int ID;
     string name;
-    int average_score;
     vector<int> reviews;
     vector<double> user_similarity;
     vector<int> most_similar_users;
