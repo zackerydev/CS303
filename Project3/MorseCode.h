@@ -37,6 +37,9 @@ public:
 
     string Encode(string input)
     {
+         // This allows us to check to make sure the iterator returns a valid spot on the map, if its not the end the item will be in the map.
+         // We decided to not raise an error and just continue, notifying the user that we have encountered a certain invalid character and 
+         // are moving on.
         string output = "";
         for (int i = 0; i < input.length(); i++)
         {
