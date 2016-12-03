@@ -3,11 +3,11 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include "Binary_Tree.h"
 #include <algorithm>
 #include "Code_Sort.h"
 #include <map>
 #include "String_Tokenizer.h"
+#include "Morse_Tree.h"
 
 using namespace std;
 
@@ -40,8 +40,16 @@ public:
         string output = "";
         for (int i = 0; i < input.length(); i++)
         {
-            output.append(encode_map[input[i]]);
-            output.append(" ");
+            map<char,string>::const_iterator iter = encode_map.find(input[i]);
+            if (iter != encode_map.end())
+            {
+                output.append(encode_map.find(input[i])->second);
+                output.append(" ");
+            }
+            else
+            {
+                cout << "Unable to convert " << input[i] << " to a morse code value...skipping character" << endl;
+            }
         }
         return output;
     }
@@ -63,7 +71,7 @@ public:
 private:
     string file_name;
     vector<string> commands;
-    Binary_Tree<char> morse_tree;
+    Morse_Tree morse_tree;
     Code_Sort code_sort;
     map<char, string> encode_map;
     String_Sort string_sort;
